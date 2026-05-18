@@ -15,7 +15,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-namespace uniffi.xcelerate_core;
+namespace uniffi.xcelerate;
 
 
 
@@ -31,7 +31,7 @@ public struct RustBuffer {
 
     public static RustBuffer Alloc(int size) {
         return _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            var buffer = _UniFFILib.ffi_xcelerate_core_rustbuffer_alloc(Convert.ToUInt64(size), ref status);
+            var buffer = _UniFFILib.ffi_xcelerate_rustbuffer_alloc(Convert.ToUInt64(size), ref status);
             if (buffer.data == IntPtr.Zero) {
                 throw new AllocationException($"RustBuffer.Alloc() returned null data pointer (size={size})");
             }
@@ -41,7 +41,7 @@ public struct RustBuffer {
 
     public static void Free(RustBuffer buffer) {
         _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            _UniFFILib.ffi_xcelerate_core_rustbuffer_free(buffer, ref status);
+            _UniFFILib.ffi_xcelerate_rustbuffer_free(buffer, ref status);
         });
     }
 
@@ -805,602 +805,602 @@ static class _UniFFILib {
         
         }
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_clone_browser(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_clone_browser(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void uniffi_xcelerate_core_fn_free_browser(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_xcelerate_fn_free_browser(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_constructor_browser_launch(RustBuffer @config
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_constructor_browser_launch(RustBuffer @config
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_browser_close(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_browser_close(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_browser_new_page(IntPtr @ptr,RustBuffer @url
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_browser_new_page(IntPtr @ptr,RustBuffer @url
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_browser_version(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_browser_version(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_clone_element(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_clone_element(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void uniffi_xcelerate_core_fn_free_element(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_xcelerate_fn_free_element(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_attribute(IntPtr @ptr,RustBuffer @name
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_attribute(IntPtr @ptr,RustBuffer @name
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_click(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_click(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_focus(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_focus(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_hover(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_hover(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_inner_html(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_inner_html(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_text(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_text(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_element_type_text(IntPtr @ptr,RustBuffer @text
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_type_text(IntPtr @ptr,RustBuffer @text
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_clone_page(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_clone_page(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void uniffi_xcelerate_core_fn_free_page(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void uniffi_xcelerate_fn_free_page(IntPtr @ptr,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_add_script_to_evaluate_on_new_document(IntPtr @ptr,RustBuffer @source
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_add_script_to_evaluate_on_new_document(IntPtr @ptr,RustBuffer @source
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_content(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_content(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern RustBuffer uniffi_xcelerate_core_fn_method_page_decode_base64(IntPtr @ptr,RustBuffer @data,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer uniffi_xcelerate_fn_method_page_decode_base64(IntPtr @ptr,RustBuffer @data,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_find_element(IntPtr @ptr,RustBuffer @selector
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_find_element(IntPtr @ptr,RustBuffer @selector
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_go_back(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_go_back(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_navigate(IntPtr @ptr,RustBuffer @url
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_navigate(IntPtr @ptr,RustBuffer @url
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_pdf(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_pdf(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_reload(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_reload(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_screenshot(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_screenshot(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_screenshot_full(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_screenshot_full(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_title(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_title(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_wait_for_navigation(IntPtr @ptr
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_wait_for_navigation(IntPtr @ptr
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr uniffi_xcelerate_core_fn_method_page_wait_for_selector(IntPtr @ptr,RustBuffer @selector
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_wait_for_selector(IntPtr @ptr,RustBuffer @selector
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern RustBuffer ffi_xcelerate_core_rustbuffer_alloc(ulong @size,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer ffi_xcelerate_rustbuffer_alloc(ulong @size,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern RustBuffer ffi_xcelerate_core_rustbuffer_from_bytes(ForeignBytes @bytes,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer ffi_xcelerate_rustbuffer_from_bytes(ForeignBytes @bytes,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rustbuffer_free(RustBuffer @buf,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rustbuffer_free(RustBuffer @buf,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern RustBuffer ffi_xcelerate_core_rustbuffer_reserve(RustBuffer @buf,ulong @additional,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer ffi_xcelerate_rustbuffer_reserve(RustBuffer @buf,ulong @additional,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_u8(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_u8(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_u8(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_u8(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_u8(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_u8(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern byte ffi_xcelerate_core_rust_future_complete_u8(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern byte ffi_xcelerate_rust_future_complete_u8(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_i8(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_i8(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_i8(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_i8(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_i8(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_i8(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern sbyte ffi_xcelerate_core_rust_future_complete_i8(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern sbyte ffi_xcelerate_rust_future_complete_i8(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_u16(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_u16(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_u16(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_u16(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_u16(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_u16(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort ffi_xcelerate_core_rust_future_complete_u16(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort ffi_xcelerate_rust_future_complete_u16(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_i16(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_i16(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_i16(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_i16(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_i16(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_i16(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern short ffi_xcelerate_core_rust_future_complete_i16(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern short ffi_xcelerate_rust_future_complete_i16(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_u32(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_u32(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_u32(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_u32(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_u32(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_u32(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern uint ffi_xcelerate_core_rust_future_complete_u32(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern uint ffi_xcelerate_rust_future_complete_u32(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_i32(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_i32(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_i32(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_i32(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_i32(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_i32(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int ffi_xcelerate_core_rust_future_complete_i32(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern int ffi_xcelerate_rust_future_complete_i32(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_u64(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_u64(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_u64(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_u64(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_u64(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_u64(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ulong ffi_xcelerate_core_rust_future_complete_u64(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ulong ffi_xcelerate_rust_future_complete_u64(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_i64(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_i64(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_i64(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_i64(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_i64(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_i64(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern long ffi_xcelerate_core_rust_future_complete_i64(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern long ffi_xcelerate_rust_future_complete_i64(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_f32(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_f32(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_f32(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_f32(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_f32(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_f32(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern float ffi_xcelerate_core_rust_future_complete_f32(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern float ffi_xcelerate_rust_future_complete_f32(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_f64(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_f64(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_f64(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_f64(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_f64(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_f64(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern double ffi_xcelerate_core_rust_future_complete_f64(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern double ffi_xcelerate_rust_future_complete_f64(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_pointer(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_pointer(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_pointer(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_pointer(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_pointer(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_pointer(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern IntPtr ffi_xcelerate_core_rust_future_complete_pointer(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr ffi_xcelerate_rust_future_complete_pointer(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_rust_buffer(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_rust_buffer(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_rust_buffer(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_rust_buffer(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_rust_buffer(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_rust_buffer(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern RustBuffer ffi_xcelerate_core_rust_future_complete_rust_buffer(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern RustBuffer ffi_xcelerate_rust_future_complete_rust_buffer(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_poll_void(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_poll_void(IntPtr @handle,IntPtr @callback,IntPtr @callbackData
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_cancel_void(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_cancel_void(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_free_void(IntPtr @handle
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_free_void(IntPtr @handle
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern void ffi_xcelerate_core_rust_future_complete_void(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void ffi_xcelerate_rust_future_complete_void(IntPtr @handle,ref UniffiRustCallStatus _uniffi_out_err
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_browser_close(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_browser_close(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_browser_new_page(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_browser_new_page(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_browser_version(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_browser_version(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_attribute(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_attribute(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_click(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_click(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_focus(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_focus(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_hover(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_hover(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_inner_html(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_inner_html(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_text(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_text(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_element_type_text(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_type_text(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_add_script_to_evaluate_on_new_document(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_add_script_to_evaluate_on_new_document(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_content(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_content(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_decode_base64(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_decode_base64(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_find_element(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_find_element(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_go_back(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_go_back(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_navigate(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_navigate(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_pdf(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_pdf(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_reload(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_reload(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_screenshot(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_screenshot(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_screenshot_full(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_screenshot_full(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_title(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_title(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_wait_for_navigation(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_wait_for_navigation(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_method_page_wait_for_selector(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_wait_for_selector(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern ushort uniffi_xcelerate_core_checksum_constructor_browser_launch(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_constructor_browser_launch(
     );
 
-    [DllImport("xcelerate_core", CallingConvention = CallingConvention.Cdecl)]
-    public static extern uint ffi_xcelerate_core_uniffi_contract_version(
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern uint ffi_xcelerate_uniffi_contract_version(
     );
 
     
 
     static void uniffiCheckContractApiVersion() {
-        var scaffolding_contract_version = _UniFFILib.ffi_xcelerate_core_uniffi_contract_version();
+        var scaffolding_contract_version = _UniFFILib.ffi_xcelerate_uniffi_contract_version();
         if (29 != scaffolding_contract_version) {
-            throw new UniffiContractVersionException($"uniffi.xcelerate_core: uniffi bindings expected version `29`, library returned `{scaffolding_contract_version}`");
+            throw new UniffiContractVersionException($"uniffi.xcelerate: uniffi bindings expected version `29`, library returned `{scaffolding_contract_version}`");
         }
     }
 
     static void uniffiCheckApiChecksums() {
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_browser_close();
-            if (checksum != 58870) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_browser_close` checksum `58870`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_browser_close();
+            if (checksum != 19643) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_browser_close` checksum `19643`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_browser_new_page();
-            if (checksum != 6589) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_browser_new_page` checksum `6589`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_browser_new_page();
+            if (checksum != 54038) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_browser_new_page` checksum `54038`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_browser_version();
-            if (checksum != 25979) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_browser_version` checksum `25979`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_browser_version();
+            if (checksum != 1405) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_browser_version` checksum `1405`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_attribute();
-            if (checksum != 1460) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_attribute` checksum `1460`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_attribute();
+            if (checksum != 50814) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_attribute` checksum `50814`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_click();
-            if (checksum != 54597) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_click` checksum `54597`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_click();
+            if (checksum != 9305) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_click` checksum `9305`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_focus();
-            if (checksum != 12783) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_focus` checksum `12783`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_focus();
+            if (checksum != 30439) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_focus` checksum `30439`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_hover();
-            if (checksum != 38740) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_hover` checksum `38740`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_hover();
+            if (checksum != 28667) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_hover` checksum `28667`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_inner_html();
-            if (checksum != 18173) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_inner_html` checksum `18173`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_inner_html();
+            if (checksum != 42668) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_inner_html` checksum `42668`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_text();
-            if (checksum != 47866) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_text` checksum `47866`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_text();
+            if (checksum != 65284) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_text` checksum `65284`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_element_type_text();
-            if (checksum != 14210) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_element_type_text` checksum `14210`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_type_text();
+            if (checksum != 34583) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_type_text` checksum `34583`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_add_script_to_evaluate_on_new_document();
-            if (checksum != 31741) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_add_script_to_evaluate_on_new_document` checksum `31741`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_add_script_to_evaluate_on_new_document();
+            if (checksum != 60815) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_add_script_to_evaluate_on_new_document` checksum `60815`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_content();
-            if (checksum != 28639) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_content` checksum `28639`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_content();
+            if (checksum != 23460) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_content` checksum `23460`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_decode_base64();
-            if (checksum != 10101) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_decode_base64` checksum `10101`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_decode_base64();
+            if (checksum != 40332) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_decode_base64` checksum `40332`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_find_element();
-            if (checksum != 19912) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_find_element` checksum `19912`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_find_element();
+            if (checksum != 12382) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_find_element` checksum `12382`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_go_back();
-            if (checksum != 46731) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_go_back` checksum `46731`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_go_back();
+            if (checksum != 14351) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_go_back` checksum `14351`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_navigate();
-            if (checksum != 37964) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_navigate` checksum `37964`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_navigate();
+            if (checksum != 18007) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_navigate` checksum `18007`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_pdf();
-            if (checksum != 51947) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_pdf` checksum `51947`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_pdf();
+            if (checksum != 34204) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_pdf` checksum `34204`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_reload();
-            if (checksum != 10875) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_reload` checksum `10875`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_reload();
+            if (checksum != 35895) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_reload` checksum `35895`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_screenshot();
-            if (checksum != 14844) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_screenshot` checksum `14844`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_screenshot();
+            if (checksum != 65105) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_screenshot` checksum `65105`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_screenshot_full();
-            if (checksum != 37506) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_screenshot_full` checksum `37506`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_screenshot_full();
+            if (checksum != 23047) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_screenshot_full` checksum `23047`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_title();
-            if (checksum != 35947) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_title` checksum `35947`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_title();
+            if (checksum != 52359) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_title` checksum `52359`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_wait_for_navigation();
-            if (checksum != 49988) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_wait_for_navigation` checksum `49988`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_wait_for_navigation();
+            if (checksum != 36640) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_wait_for_navigation` checksum `36640`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_method_page_wait_for_selector();
-            if (checksum != 51060) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_method_page_wait_for_selector` checksum `51060`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_wait_for_selector();
+            if (checksum != 23931) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_wait_for_selector` checksum `23931`, library returned `{checksum}`");
             }
         }
         {
-            var checksum = _UniFFILib.uniffi_xcelerate_core_checksum_constructor_browser_launch();
-            if (checksum != 23267) {
-                throw new UniffiContractChecksumException($"uniffi.xcelerate_core: uniffi bindings expected function `uniffi_xcelerate_core_checksum_constructor_browser_launch` checksum `23267`, library returned `{checksum}`");
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_constructor_browser_launch();
+            if (checksum != 5515) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_constructor_browser_launch` checksum `5515`, library returned `{checksum}`");
             }
         }
     }
@@ -1542,13 +1542,13 @@ public class Browser : IBrowser, IDisposable {
 
     protected void FreeRustArcPtr() {
         _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            _UniFFILib.uniffi_xcelerate_core_fn_free_browser(this.pointer, ref status);
+            _UniFFILib.uniffi_xcelerate_fn_free_browser(this.pointer, ref status);
         });
     }
 
     protected IntPtr CloneRustArcPtr() {
         return _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_clone_browser(this.pointer, ref status);
+            return _UniFFILib.uniffi_xcelerate_fn_clone_browser(this.pointer, ref status);
         });
     }
 
@@ -1623,15 +1623,15 @@ public class Browser : IBrowser, IDisposable {
     public async Task Close() {await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_browser_close(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_browser_close(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_void(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_void(future, continuation, data),
         // Complete
-        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_core_rust_future_complete_void(future, ref status);
+        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_rust_future_complete_void(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_void(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -1642,16 +1642,16 @@ public class Browser : IBrowser, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_browser_new_page(thisPtr, FfiConverterString.INSTANCE.Lower(@url));
+            return _UniFFILib.uniffi_xcelerate_fn_method_browser_new_page(thisPtr, FfiConverterString.INSTANCE.Lower(@url));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypePage.INSTANCE.Lift(result),
         // Error
@@ -1667,16 +1667,16 @@ public class Browser : IBrowser, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_browser_version(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_browser_version(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
@@ -1690,15 +1690,15 @@ public class Browser : IBrowser, IDisposable {
     public static async Task<Browser> Launch (BrowserConfig @config) {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
-        _UniFFILib.uniffi_xcelerate_core_fn_constructor_browser_launch(FfiConverterTypeBrowserConfig.INSTANCE.Lower(@config)),
+        _UniFFILib.uniffi_xcelerate_fn_constructor_browser_launch(FfiConverterTypeBrowserConfig.INSTANCE.Lower(@config)),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeBrowser.INSTANCE.Lift(result),
         // Error
@@ -1790,13 +1790,13 @@ public class Element : IElement, IDisposable {
 
     protected void FreeRustArcPtr() {
         _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            _UniFFILib.uniffi_xcelerate_core_fn_free_element(this.pointer, ref status);
+            _UniFFILib.uniffi_xcelerate_fn_free_element(this.pointer, ref status);
         });
     }
 
     protected IntPtr CloneRustArcPtr() {
         return _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_clone_element(this.pointer, ref status);
+            return _UniFFILib.uniffi_xcelerate_fn_clone_element(this.pointer, ref status);
         });
     }
 
@@ -1872,16 +1872,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_attribute(thisPtr, FfiConverterString.INSTANCE.Lower(@name));
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_attribute(thisPtr, FfiConverterString.INSTANCE.Lower(@name));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterOptionalString.INSTANCE.Lift(result),
         // Error
@@ -1897,16 +1897,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_click(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_click(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
         // Error
@@ -1922,16 +1922,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_focus(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_focus(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
         // Error
@@ -1947,16 +1947,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_hover(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_hover(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
         // Error
@@ -1972,16 +1972,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_inner_html(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_inner_html(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
@@ -1997,16 +1997,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_text(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_text(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
@@ -2019,16 +2019,16 @@ public class Element : IElement, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_element_type_text(thisPtr, FfiConverterString.INSTANCE.Lower(@text));
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_type_text(thisPtr, FfiConverterString.INSTANCE.Lower(@text));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
         // Error
@@ -2133,13 +2133,13 @@ public class Page : IPage, IDisposable {
 
     protected void FreeRustArcPtr() {
         _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            _UniFFILib.uniffi_xcelerate_core_fn_free_page(this.pointer, ref status);
+            _UniFFILib.uniffi_xcelerate_fn_free_page(this.pointer, ref status);
         });
     }
 
     protected IntPtr CloneRustArcPtr() {
         return _UniffiHelpers.RustCall((ref UniffiRustCallStatus status) => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_clone_page(this.pointer, ref status);
+            return _UniFFILib.uniffi_xcelerate_fn_clone_page(this.pointer, ref status);
         });
     }
 
@@ -2215,16 +2215,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_add_script_to_evaluate_on_new_document(thisPtr, FfiConverterString.INSTANCE.Lower(@source));
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_add_script_to_evaluate_on_new_document(thisPtr, FfiConverterString.INSTANCE.Lower(@source));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
@@ -2240,16 +2240,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_content(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_content(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
@@ -2261,7 +2261,7 @@ public class Page : IPage, IDisposable {
     public byte[] DecodeBase64(string @data) {
         return CallWithPointer(thisPtr => FfiConverterByteArray.INSTANCE.Lift(
     _UniffiHelpers.RustCallWithError(FfiConverterTypeXcelerateError.INSTANCE, (ref UniffiRustCallStatus _status) =>
-    _UniFFILib.uniffi_xcelerate_core_fn_method_page_decode_base64(thisPtr, FfiConverterString.INSTANCE.Lower(@data), ref _status)
+    _UniFFILib.uniffi_xcelerate_fn_method_page_decode_base64(thisPtr, FfiConverterString.INSTANCE.Lower(@data), ref _status)
 )));
     }
     
@@ -2274,16 +2274,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_find_element(thisPtr, FfiConverterString.INSTANCE.Lower(@selector));
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_find_element(thisPtr, FfiConverterString.INSTANCE.Lower(@selector));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
         // Error
@@ -2295,15 +2295,15 @@ public class Page : IPage, IDisposable {
     public async Task GoBack() {await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_go_back(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_go_back(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_void(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_void(future, continuation, data),
         // Complete
-        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_core_rust_future_complete_void(future, ref status);
+        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_rust_future_complete_void(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_void(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -2316,15 +2316,15 @@ public class Page : IPage, IDisposable {
     public async Task Navigate(string @url) {await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_navigate(thisPtr, FfiConverterString.INSTANCE.Lower(@url));
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_navigate(thisPtr, FfiConverterString.INSTANCE.Lower(@url));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_void(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_void(future, continuation, data),
         // Complete
-        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_core_rust_future_complete_void(future, ref status);
+        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_rust_future_complete_void(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_void(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -2335,16 +2335,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_pdf(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_pdf(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterByteArray.INSTANCE.Lift(result),
         // Error
@@ -2359,15 +2359,15 @@ public class Page : IPage, IDisposable {
     public async Task Reload() {await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_reload(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_reload(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_void(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_void(future, continuation, data),
         // Complete
-        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_core_rust_future_complete_void(future, ref status);
+        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_rust_future_complete_void(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_void(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -2378,16 +2378,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_screenshot(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_screenshot(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterByteArray.INSTANCE.Lift(result),
         // Error
@@ -2400,16 +2400,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_screenshot_full(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_screenshot_full(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterByteArray.INSTANCE.Lift(result),
         // Error
@@ -2425,16 +2425,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_title(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_title(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_rust_buffer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_rust_buffer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_rust_buffer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
         // Lift
         (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
@@ -2449,15 +2449,15 @@ public class Page : IPage, IDisposable {
     public async Task WaitForNavigation() {await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_wait_for_navigation(thisPtr);
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_wait_for_navigation(thisPtr);
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_void(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_void(future, continuation, data),
         // Complete
-        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_core_rust_future_complete_void(future, ref status);
+        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_rust_future_complete_void(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_void(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -2471,16 +2471,16 @@ public class Page : IPage, IDisposable {
     return await _UniFFIAsync.UniffiRustCallAsync(
         // Get rust future
         CallWithPointer(thisPtr => {
-            return _UniFFILib.uniffi_xcelerate_core_fn_method_page_wait_for_selector(thisPtr, FfiConverterString.INSTANCE.Lower(@selector));
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_wait_for_selector(thisPtr, FfiConverterString.INSTANCE.Lower(@selector));
         }),
         // Poll
-        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_core_rust_future_poll_pointer(future, continuation, data),
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
         // Complete
         (IntPtr future, ref UniffiRustCallStatus status) => {
-            return _UniFFILib.ffi_xcelerate_core_rust_future_complete_pointer(future, ref status);
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
         },
         // Free
-        (IntPtr future) => _UniFFILib.ffi_xcelerate_core_rust_future_free_pointer(future),
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
         // Error
@@ -2849,6 +2849,6 @@ internal static class _UniFFIAsync {
     }
 }
 #pragma warning restore 8625
-internal static class XcelerateCoreMethods {
+internal static class XcelerateMethods {
 }
 

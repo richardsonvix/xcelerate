@@ -15,7 +15,7 @@ def run_command(cmd, cwd=None):
 def main():
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     rust_dir = root_dir
-    dll_name = "xcelerate_core.dll"
+    dll_name = "xcelerate.dll"
     built_dll = os.path.join(rust_dir, "target", "release", dll_name)
     js_dir = os.path.join(root_dir, "bindings", "javascript") # Updated name
     
@@ -97,7 +97,7 @@ def main():
             print(f"[PATCH] Updated package.json to version {version}")
 
         # Copy all native libraries to the JS folder
-        native_libs = ["xcelerate_core.dll", "libxcelerate_core.so", "libxcelerate_core.dylib"]
+        native_libs = ["xcelerate.dll", "libxcelerate.so", "libxcelerate.dylib"]
         for lib in native_libs:
             src = os.path.join(rust_dir, "target", "release", lib)
             if os.path.exists(src):
@@ -105,7 +105,7 @@ def main():
                 print(f"[COPY] {lib} -> {js_dir}")
         
         # POST-PROCESS: Optional args and camelCase renames
-        js_file = os.path.join(js_dir, "xcelerate_core.js")
+        js_file = os.path.join(js_dir, "xcelerate.js")
         if os.path.exists(js_file):
             with open(js_file, "r") as f:
                 content = f.read()

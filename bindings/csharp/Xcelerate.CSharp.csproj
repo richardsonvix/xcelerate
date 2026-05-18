@@ -17,9 +17,8 @@
     <PackageTags>cdp;browser;automation;chrome;headless;rust;ffi;aot;nativeaot;dotnet;csharp;managed;selenium-alternative;playwright-alternative</PackageTags>
     <IsPackable>true</IsPackable>
     <IncludeContentInPack>true</IncludeContentInPack>
-    <PackageReadmeFile>README_NUGET.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     
-    <!-- NativeAOT & Performance Optimizations -->
     <IsAotCompatible>true</IsAotCompatible>
     <OptimizationPreference>Speed</OptimizationPreference>
     <StackTraceSupport>false</StackTraceSupport>
@@ -27,14 +26,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Include the native libraries in the NuGet package with RID-specific paths -->
-    <None Include="xcelerate_core.dll" Pack="true" PackagePath="runtimes/win-x64/native/">
+    <None Include="xcelerate.dll" Pack="true" PackagePath="runtimes/win-x64/native/">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="libxcelerate_core.so" Pack="true" PackagePath="runtimes/linux-x64/native/">
+    <None Include="libxcelerate.so" Pack="true" PackagePath="runtimes/linux-x64/native/">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="libxcelerate_core.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/">
+    <None Include="libxcelerate.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="README_NUGET.md" Pack="true" PackagePath="\" />

@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="xcelerate_core.dll">
+    <None Include="xcelerate.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

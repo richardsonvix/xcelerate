@@ -1,4 +1,4 @@
-using uniffi.xcelerate_core;
+using uniffi.xcelerate;
 
 Console.WriteLine("--- Xcelerate C# UniFFI Test App (Bot Check) ---");
 

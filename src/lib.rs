@@ -16,7 +16,7 @@ pub use page::Page;
 pub use element::Element;
 pub use connection::{CdpClient, CdpHandler};
 
-uniffi::setup_scaffolding!("xcelerate_core");
+uniffi::setup_scaffolding!("xcelerate");
 
 /// The core trait for defining CDP commands.
 pub use connection::client::CdpCommand;

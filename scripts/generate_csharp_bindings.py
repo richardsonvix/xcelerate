@@ -19,7 +19,7 @@ def main():
     rust_dir = root_dir
     csharp_dir = os.path.join(root_dir, "bindings", "csharp")
     
-    dll_name = "xcelerate_core.dll"
+    dll_name = "xcelerate.dll"
     built_dll = os.path.join(rust_dir, "target", "release", dll_name)
 
     print("--- 1. Building Rust Library (cdylib) ---")
@@ -64,7 +64,7 @@ def main():
     
     print("\n--- 3. Fixing Visibility (Internal -> Public) ---")
     # UniFFI C# generator often defaults to internal. We make it public for easier consumption.
-    generated_cs = os.path.join(csharp_dir, "xcelerate_core.cs")
+    generated_cs = os.path.join(csharp_dir, "xcelerate.cs")
     
     with open(generated_cs, "r") as f:
         cs_content = f.read()
@@ -107,7 +107,7 @@ def main():
         f.write(content)
 
     print("\n--- 4. Distributing Native Libraries ---")
-    native_libs = ["xcelerate_core.dll", "libxcelerate_core.so", "libxcelerate_core.dylib"]
+    native_libs = ["xcelerate.dll", "libxcelerate.so", "libxcelerate.dylib"]
     for lib in native_libs:
         src = os.path.join(rust_dir, "target", "release", lib)
         if os.path.exists(src):

@@ -18,7 +18,7 @@ include = [
 ]
 
 [lib]
-name = "xcelerate_core"
+name = "xcelerate"
 crate-type = ["rlib", "cdylib"]
 
 [[bin]]
