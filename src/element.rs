@@ -1,4 +1,4 @@
-use crate::page::Page;
+use crate::page::{Page, Lcg};
 use crate::error::XcelerateResult;
 use std::sync::Arc;
 
@@ -45,6 +45,82 @@ impl Element {
     /// Hovers over the element.
     pub async fn hover(self: Arc<Self>) -> XcelerateResult<Arc<Self>> {
         self.call_js("function() { this.dispatchEvent(new MouseEvent('mouseover', { bubbles: true })); }".to_string()).await?;
+        Ok(self)
+    }
+
+    /// Clicks the element using realistic mouse movement and CDP input events.
+    pub async fn click_stealth(self: Arc<Self>) -> XcelerateResult<Arc<Self>> {
+        let js = "function() {
+            this.scrollIntoView({ block: 'center', inline: 'center' });
+            const rect = this.getBoundingClientRect();
+            return JSON.stringify({
+                x: rect.left,
+                y: rect.top,
+                width: rect.width,
+                height: rect.height
+            });
+        }".to_string();
+
+        let res = self.call_js(js).await?;
+        let val_str = res.result.value
+            .and_then(|v| v.as_str().map(|s| s.to_string()))
+            .ok_or_else(|| crate::error::XcelerateError::InternalError)?;
+
+        #[derive(serde::Deserialize)]
+        struct Rect {
+            x: f64,
+            y: f64,
+            width: f64,
+            height: f64,
+        }
+
+        let rect: Rect = serde_json::from_str(&val_str)
+            .map_err(|e| crate::error::XcelerateError::SerdeError(e.to_string()))?;
+
+        let mut rng = Lcg::new();
+        let target_x = rect.x + rect.width * 0.15 + rng.range(0.0, rect.width * 0.7);
+        let target_y = rect.y + rect.height * 0.15 + rng.range(0.0, rect.height * 0.7);
+
+        self.page.clone().click_mouse(target_x, target_y).await?;
+
+        Ok(self)
+    }
+
+    /// Hovers over the element using realistic mouse movement.
+    pub async fn hover_stealth(self: Arc<Self>) -> XcelerateResult<Arc<Self>> {
+        let js = "function() {
+            this.scrollIntoView({ block: 'center', inline: 'center' });
+            const rect = this.getBoundingClientRect();
+            return JSON.stringify({
+                x: rect.left,
+                y: rect.top,
+                width: rect.width,
+                height: rect.height
+            });
+        }".to_string();
+
+        let res = self.call_js(js).await?;
+        let val_str = res.result.value
+            .and_then(|v| v.as_str().map(|s| s.to_string()))
+            .ok_or_else(|| crate::error::XcelerateError::InternalError)?;
+
+        #[derive(serde::Deserialize)]
+        struct Rect {
+            x: f64,
+            y: f64,
+            width: f64,
+            height: f64,
+        }
+
+        let rect: Rect = serde_json::from_str(&val_str)
+            .map_err(|e| crate::error::XcelerateError::SerdeError(e.to_string()))?;
+
+        let mut rng = Lcg::new();
+        let target_x = rect.x + rect.width * 0.15 + rng.range(0.0, rect.width * 0.7);
+        let target_y = rect.y + rect.height * 0.15 + rng.range(0.0, rect.height * 0.7);
+
+        self.page.clone().move_mouse(target_x, target_y).await?;
+
         Ok(self)
     }
 

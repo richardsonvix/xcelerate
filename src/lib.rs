@@ -50,3 +50,4 @@ impl_cdp_command!(browser_protocol::page::GetLayoutMetricsParams, browser_protoc
 impl_cdp_command!(browser_protocol::emulation::SetDeviceMetricsOverrideParams, serde_json::Value, "Emulation.setDeviceMetricsOverride");
 impl_cdp_command!(browser_protocol::emulation::ClearDeviceMetricsOverrideParams, serde_json::Value, "Emulation.clearDeviceMetricsOverride");
 impl_cdp_command!(browser_protocol::input::DispatchKeyEventParams, serde_json::Value, "Input.dispatchKeyEvent");
+impl_cdp_command!(browser_protocol::input::DispatchMouseEventParams, serde_json::Value, "Input.dispatchMouseEvent");

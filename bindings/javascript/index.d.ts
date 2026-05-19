@@ -1,1 +1,1 @@
-export * from "./xcelerate_core.js";
+export * from "./xcelerate.js";

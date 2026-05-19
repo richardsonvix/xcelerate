@@ -798,6 +798,18 @@ static class _UniFFILib {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     static _UniFFILib() {
         _UniFFILib.uniffiCheckContractApiVersion();
@@ -846,11 +858,19 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_click_stealth(IntPtr @ptr
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr uniffi_xcelerate_fn_method_element_focus(IntPtr @ptr
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr uniffi_xcelerate_fn_method_element_hover(IntPtr @ptr
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_hover_stealth(IntPtr @ptr
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
@@ -878,6 +898,10 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_click_mouse(IntPtr @ptr,double @x,double @y
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr uniffi_xcelerate_fn_method_page_content(IntPtr @ptr
     );
 
@@ -891,6 +915,18 @@ static class _UniFFILib {
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr uniffi_xcelerate_fn_method_page_go_back(IntPtr @ptr
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_mouse_down(IntPtr @ptr,RustBuffer @button
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_mouse_up(IntPtr @ptr,RustBuffer @button
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_move_mouse(IntPtr @ptr,double @x,double @y
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
@@ -1170,11 +1206,19 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_click_stealth(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_xcelerate_checksum_method_element_focus(
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_xcelerate_checksum_method_element_hover(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_hover_stealth(
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
@@ -1194,6 +1238,10 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_click_mouse(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_xcelerate_checksum_method_page_content(
     );
 
@@ -1207,6 +1255,18 @@ static class _UniFFILib {
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_xcelerate_checksum_method_page_go_back(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_mouse_down(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_mouse_up(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_move_mouse(
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
@@ -1290,6 +1350,12 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_click_stealth();
+            if (checksum != 23670) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_click_stealth` checksum `23670`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_focus();
             if (checksum != 30439) {
                 throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_focus` checksum `30439`, library returned `{checksum}`");
@@ -1299,6 +1365,12 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_hover();
             if (checksum != 28667) {
                 throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_hover` checksum `28667`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_hover_stealth();
+            if (checksum != 51884) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_hover_stealth` checksum `51884`, library returned `{checksum}`");
             }
         }
         {
@@ -1326,6 +1398,12 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_click_mouse();
+            if (checksum != 39721) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_click_mouse` checksum `39721`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_content();
             if (checksum != 23460) {
                 throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_content` checksum `23460`, library returned `{checksum}`");
@@ -1347,6 +1425,24 @@ static class _UniFFILib {
             var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_go_back();
             if (checksum != 14351) {
                 throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_go_back` checksum `14351`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_mouse_down();
+            if (checksum != 26548) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_mouse_down` checksum `26548`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_mouse_up();
+            if (checksum != 10935) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_mouse_up` checksum `10935`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_move_mouse();
+            if (checksum != 24494) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_move_mouse` checksum `24494`, library returned `{checksum}`");
             }
         }
         {
@@ -1410,6 +1506,32 @@ static class _UniFFILib {
 
 #pragma warning disable 8625
 
+
+
+
+public class FfiConverterDouble: FfiConverter<double, double> {
+    public static FfiConverterDouble INSTANCE = new FfiConverterDouble();
+
+    public override double Lift(double value) {
+        return value;
+    }
+
+    public override double Read(BigEndianStream stream) {
+        return stream.ReadDouble();
+    }
+
+    public override double Lower(double value) {
+        return value;
+    }
+
+    public override int AllocationSize(double value) {
+        return 8;
+    }
+
+    public override void Write(double value, BigEndianStream stream) {
+        stream.WriteDouble(value);
+    }
+}
 
 
 
@@ -1750,6 +1872,11 @@ public interface IElement {
     /// <exception cref="XcelerateException"></exception>
     Task<Element> Click();
     /// <summary>
+    /// Clicks the element using realistic mouse movement and CDP input events.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Element> ClickStealth();
+    /// <summary>
     /// Focuses the element.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
@@ -1759,6 +1886,11 @@ public interface IElement {
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
     Task<Element> Hover();
+    /// <summary>
+    /// Hovers over the element using realistic mouse movement.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Element> HoverStealth();
     /// <summary>
     /// Returns the inner HTML of the element.
     /// </summary>
@@ -1915,6 +2047,31 @@ public class Element : IElement, IDisposable {
     }
     
     /// <summary>
+    /// Clicks the element using realistic mouse movement and CDP input events.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Element> ClickStealth() {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_click_stealth(thisPtr);
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
+        // Lift
+        (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
     /// Focuses the element.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
@@ -1948,6 +2105,31 @@ public class Element : IElement, IDisposable {
         // Get rust future
         CallWithPointer(thisPtr => {
             return _UniFFILib.uniffi_xcelerate_fn_method_element_hover(thisPtr);
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
+        // Lift
+        (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Hovers over the element using realistic mouse movement.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Element> HoverStealth() {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_hover_stealth(thisPtr);
         }),
         // Poll
         (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
@@ -2073,6 +2255,11 @@ public interface IPage {
     /// <exception cref="XcelerateException"></exception>
     Task<string> AddScriptToEvaluateOnNewDocument(string @source);
     /// <summary>
+    /// Moves the mouse to (x, y) and performs a click (down & up) with human-like delays.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Page> ClickMouse(double @x, double @y);
+    /// <summary>
     /// Returns the full HTML content of the page.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
@@ -2086,6 +2273,21 @@ public interface IPage {
     Task<Element> FindElement(string @selector);
     /// <exception cref="XcelerateException"></exception>
     Task GoBack();
+    /// <summary>
+    /// Triggers a mousePress event at the current mouse coordinates.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Page> MouseDown(string @button);
+    /// <summary>
+    /// Triggers a mouseReleased event at the current mouse coordinates.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Page> MouseUp(string @button);
+    /// <summary>
+    /// Moves the mouse cursor from the current position to the target (x, y) along a realistic Bezier curve.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Page> MoveMouse(double @x, double @y);
     /// <summary>
     /// Navigates to a URL.
     /// </summary>
@@ -2233,6 +2435,31 @@ public class Page : IPage, IDisposable {
     }
     
     /// <summary>
+    /// Moves the mouse to (x, y) and performs a click (down & up) with human-like delays.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Page> ClickMouse(double @x, double @y) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_click_mouse(thisPtr, FfiConverterDouble.INSTANCE.Lower(@x), FfiConverterDouble.INSTANCE.Lower(@y));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
+        // Lift
+        (result) => FfiConverterTypePage.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
     /// Returns the full HTML content of the page.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
@@ -2304,6 +2531,81 @@ public class Page : IPage, IDisposable {
         },
         // Free
         (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Triggers a mousePress event at the current mouse coordinates.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Page> MouseDown(string @button) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_mouse_down(thisPtr, FfiConverterString.INSTANCE.Lower(@button));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
+        // Lift
+        (result) => FfiConverterTypePage.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Triggers a mouseReleased event at the current mouse coordinates.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Page> MouseUp(string @button) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_mouse_up(thisPtr, FfiConverterString.INSTANCE.Lower(@button));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
+        // Lift
+        (result) => FfiConverterTypePage.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Moves the mouse cursor from the current position to the target (x, y) along a realistic Bezier curve.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Page> MoveMouse(double @x, double @y) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_move_mouse(thisPtr, FfiConverterDouble.INSTANCE.Lower(@x), FfiConverterDouble.INSTANCE.Lower(@y));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_pointer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_pointer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
+        // Lift
+        (result) => FfiConverterTypePage.INSTANCE.Lift(result),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );

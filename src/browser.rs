@@ -118,6 +118,8 @@ impl Browser {
         let page = Arc::new(Page {
             client: Arc::clone(&self.client),
             session_id: session.sessionId,
+            mouse_x: std::sync::Mutex::new(100.0),
+            mouse_y: std::sync::Mutex::new(100.0),
         });
 
         // 3. Inject stealth payload if enabled

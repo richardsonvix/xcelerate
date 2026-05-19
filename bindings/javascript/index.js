@@ -1,7 +1,7 @@
 
-import { load as loadFfi } from "./xcelerate_core-ffi.js";
+import { load as loadFfi } from "./xcelerate-ffi.js";
 
 loadFfi();
 
 
-export * from "./xcelerate_core.js";
+export * from "./xcelerate.js";

@@ -1,32 +1,69 @@
 using uniffi.xcelerate;
 
-Console.WriteLine("--- Xcelerate C# UniFFI Test App (Bot Check) ---");
+Console.WriteLine("--- Xcelerate C# UniFFI Test App ---");
 
 try
 {
-    Console.WriteLine("[API] Browser.Launch (Headless: false, Stealth: true)");
+    Console.WriteLine("[TEST 1] Launching Browser...");
     var config = new BrowserConfig(headless: false, stealth: true, detached: false, executablePath: null);
     using var browser = await Browser.Launch(config);
     
-    Console.WriteLine("[API] Browser.NewPage");
-    using var page = await browser.NewPage("https://pixelscan.net/bot-check");
+    Console.WriteLine("[TEST 2] Creating New Page and Navigating...");
+    // Let's navigate to wikipedia.org as a test page
+    using var page = await browser.NewPage("https://www.wikipedia.org/");
 
-    Console.WriteLine("Waiting 15 seconds for Pixelscan to run its bot checks...");
-    await Task.Delay(15000);
+    Console.WriteLine("Waiting for page load...");
+    await page.WaitForNavigation();
 
-    Console.WriteLine("[API] Page.Screenshot");
-    byte[] ss = await page.Screenshot();
-    System.IO.File.WriteAllBytes("pixelscan_result.png", ss);
-    Console.WriteLine($"Screenshot saved to pixelscan_result.png (Size: {ss.Length})");
+    // Check the page title
+    string title = await page.Title();
+    Console.WriteLine($"Page Title: {title}");
 
-    Console.WriteLine("[API] Browser.Close");
+    Console.WriteLine("[TEST 3] Locating Elements and Standard Actions...");
+    // Find the language select or search input
+    var searchInput = await page.FindElement("input#searchInput");
+    
+    // Test Focus and TypeText
+    await searchInput.Focus();
+    Console.WriteLine("Typing search query...");
+    await searchInput.TypeText("C# Programming Language");
+
+    // Retrieve and verify the value of the input using an attribute check
+    string? typedValue = await searchInput.Attribute("value");
+    Console.WriteLine($"Typed Input Value: {typedValue}");
+
+    Console.WriteLine("[TEST 4] Stealth Pointer Interactions...");
+    // Find the submit button
+    var searchButton = await page.FindElement("button[type=\"submit\"]");
+    
+    // Test HoverStealth and ClickStealth
+    Console.WriteLine("Performing Stealth Hover...");
+    await searchButton.HoverStealth();
+    
+    Console.WriteLine("Performing Stealth Click...");
+    await searchButton.ClickStealth();
+
+    Console.WriteLine("Waiting for navigation after submit...");
+    await page.WaitForNavigation();
+
+    // Check the updated title
+    string newTitle = await page.Title();
+    Console.WriteLine($"New Page Title: {newTitle}");
+
+    Console.WriteLine("[TEST 5] Screenshot Capture...");
+    byte[] screenshotBytes = await page.Screenshot();
+    string screenshotPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wikipedia_search.png");
+    await File.WriteAllBytesAsync(screenshotPath, screenshotBytes);
+    Console.WriteLine($"Screenshot successfully saved to: {screenshotPath} (Size: {screenshotBytes.Length} bytes)");
+
+    Console.WriteLine("[TEST 6] Closing Browser...");
     await browser.Close();
 
-    Console.WriteLine("\n[SUCCESS] Bot check completed.");
+    Console.WriteLine("\n[SUCCESS] All standard browser automation tests executed successfully.");
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"[ERROR] {ex.Message}");
+    Console.WriteLine($"[ERROR] Test run failed: {ex.Message}");
     if (ex.InnerException != null)
     {
         Console.WriteLine($"[INNER ERROR] {ex.InnerException.Message}");
@@ -34,4 +71,5 @@ catch (Exception ex)
     Console.WriteLine(ex.StackTrace);
 }
 
-Console.WriteLine("--- Test Finished ---");
+Console.WriteLine("--- Test Session Finished ---");
+

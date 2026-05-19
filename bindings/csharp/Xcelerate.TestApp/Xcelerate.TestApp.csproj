@@ -12,8 +12,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <None Include="xcelerate.dll">
+    <None Include="..\xcelerate.dll">
+      <Link>xcelerate.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
