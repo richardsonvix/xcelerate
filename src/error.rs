@@ -17,9 +17,12 @@ pub enum XcelerateError {
 
     #[error("Target not found: {0}")]
     NotFound(String),
-    
+
     #[error("Internal channel error")]
     InternalError,
+
+    #[error("Operation timed out: {0}")]
+    Timeout(String),
 }
 
 impl From<tokio_tungstenite::tungstenite::Error> for XcelerateError {

@@ -810,6 +810,14 @@ static class _UniFFILib {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
 
     static _UniFFILib() {
         _UniFFILib.uniffiCheckContractApiVersion();
@@ -862,6 +870,14 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_dispatch_event(IntPtr @ptr,RustBuffer @eventType,RustBuffer @key
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_element_evaluate(IntPtr @ptr,RustBuffer @script,RustBuffer @timeoutMs
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr uniffi_xcelerate_fn_method_element_focus(IntPtr @ptr
     );
 
@@ -910,7 +926,15 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_evaluate(IntPtr @ptr,RustBuffer @script,RustBuffer @timeoutMs
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr uniffi_xcelerate_fn_method_page_find_element(IntPtr @ptr,RustBuffer @selector
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr uniffi_xcelerate_fn_method_page_find_elements(IntPtr @ptr,RustBuffer @selector
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
@@ -1210,6 +1234,14 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_dispatch_event(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_element_evaluate(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_xcelerate_checksum_method_element_focus(
     );
 
@@ -1250,7 +1282,15 @@ static class _UniFFILib {
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_evaluate(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
     public static extern ushort uniffi_xcelerate_checksum_method_page_find_element(
+    );
+
+    [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
+    public static extern ushort uniffi_xcelerate_checksum_method_page_find_elements(
     );
 
     [DllImport("xcelerate", CallingConvention = CallingConvention.Cdecl)]
@@ -1356,6 +1396,18 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_dispatch_event();
+            if (checksum != 46108) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_dispatch_event` checksum `46108`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_evaluate();
+            if (checksum != 21137) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_evaluate` checksum `21137`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_element_focus();
             if (checksum != 30439) {
                 throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_element_focus` checksum `30439`, library returned `{checksum}`");
@@ -1416,9 +1468,21 @@ static class _UniFFILib {
             }
         }
         {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_evaluate();
+            if (checksum != 28351) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_evaluate` checksum `28351`, library returned `{checksum}`");
+            }
+        }
+        {
             var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_find_element();
             if (checksum != 12382) {
                 throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_find_element` checksum `12382`, library returned `{checksum}`");
+            }
+        }
+        {
+            var checksum = _UniFFILib.uniffi_xcelerate_checksum_method_page_find_elements();
+            if (checksum != 33764) {
+                throw new UniffiContractChecksumException($"uniffi.xcelerate: uniffi bindings expected function `uniffi_xcelerate_checksum_method_page_find_elements` checksum `33764`, library returned `{checksum}`");
             }
         }
         {
@@ -1506,6 +1570,32 @@ static class _UniFFILib {
 
 #pragma warning disable 8625
 
+
+
+
+public class FfiConverterUInt64: FfiConverter<ulong, ulong> {
+    public static FfiConverterUInt64 INSTANCE = new FfiConverterUInt64();
+
+    public override ulong Lift(ulong value) {
+        return value;
+    }
+
+    public override ulong Read(BigEndianStream stream) {
+        return stream.ReadULong();
+    }
+
+    public override ulong Lower(ulong value) {
+        return value;
+    }
+
+    public override int AllocationSize(ulong value) {
+        return 8;
+    }
+
+    public override void Write(ulong value, BigEndianStream stream) {
+        stream.WriteULong(value);
+    }
+}
 
 
 
@@ -1877,6 +1967,32 @@ public interface IElement {
     /// <exception cref="XcelerateException"></exception>
     Task<Element> ClickStealth();
     /// <summary>
+    /// Dispatches a DOM event on the element (e.g. "blur", "change", "input", "focus",
+    /// "keydown", "keyup", "keypress", "click", "mousedown", "mouseup").
+    ///
+    /// Picks the right event constructor based on `event_type` so that handlers reading
+    /// event-specific properties actually see them: keyboard events need `KeyboardEvent`
+    /// (for `key`/`code`/`keyCode`, since a plain `Event` leaves them empty), mouse events
+    /// need `MouseEvent` (for `button`/`clientX`/`clientY`), everything else falls back to a
+    /// plain bubbling, cancelable `Event`.
+    ///
+    /// `key` is only used for keyboard events: it sets `KeyboardEvent.key`/`.code` (e.g.
+    /// "Enter", "a", "Escape") and derives `.keyCode`/`.which` from it for legacy handlers.
+    /// Ignored for non-keyboard event types.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task DispatchEvent(string @eventType, string? @key);
+    /// <summary>
+    /// Executes an arbitrary JavaScript function body in the context of this element
+    /// (`this` refers to the element) and returns the result serialized as a JSON string.
+    ///
+    /// This reuses the same `Runtime.callFunctionOn` mechanism as the built-in element
+    /// methods (click, focus, etc.), so it does not open any new injection path beyond
+    /// what stealth already accounts for.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<string> Evaluate(string @script, ulong? @timeoutMs);
+    /// <summary>
     /// Focuses the element.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
@@ -2066,6 +2182,68 @@ public class Element : IElement, IDisposable {
         (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Dispatches a DOM event on the element (e.g. "blur", "change", "input", "focus",
+    /// "keydown", "keyup", "keypress", "click", "mousedown", "mouseup").
+    ///
+    /// Picks the right event constructor based on `event_type` so that handlers reading
+    /// event-specific properties actually see them: keyboard events need `KeyboardEvent`
+    /// (for `key`/`code`/`keyCode`, since a plain `Event` leaves them empty), mouse events
+    /// need `MouseEvent` (for `button`/`clientX`/`clientY`), everything else falls back to a
+    /// plain bubbling, cancelable `Event`.
+    ///
+    /// `key` is only used for keyboard events: it sets `KeyboardEvent.key`/`.code` (e.g.
+    /// "Enter", "a", "Escape") and derives `.keyCode`/`.which` from it for legacy handlers.
+    /// Ignored for non-keyboard event types.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task DispatchEvent(string @eventType, string? @key) {await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_dispatch_event(thisPtr, FfiConverterString.INSTANCE.Lower(@eventType), FfiConverterOptionalString.INSTANCE.Lower(@key));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_void(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {_UniFFILib.ffi_xcelerate_rust_future_complete_void(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_void(future),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Executes an arbitrary JavaScript function body in the context of this element
+    /// (`this` refers to the element) and returns the result serialized as a JSON string.
+    ///
+    /// This reuses the same `Runtime.callFunctionOn` mechanism as the built-in element
+    /// methods (click, focus, etc.), so it does not open any new injection path beyond
+    /// what stealth already accounts for.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<string> Evaluate(string @script, ulong? @timeoutMs) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_element_evaluate(thisPtr, FfiConverterString.INSTANCE.Lower(@script), FfiConverterOptionalUInt64.INSTANCE.Lower(@timeoutMs));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
+        // Lift
+        (result) => FfiConverterString.INSTANCE.Lift(result),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -2267,10 +2445,30 @@ public interface IPage {
     /// <exception cref="XcelerateException"></exception>
     byte[] DecodeBase64(string @data);
     /// <summary>
+    /// Executes an arbitrary JavaScript expression/script in the page's context and
+    /// returns its result serialized as a JSON string.
+    ///
+    /// Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+    /// after the stealth payload has already been injected for this page, so it does not
+    /// bypass or race the anti-detection setup.
+    ///
+    /// `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+    /// blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+    /// `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+    /// never replies until the loop is unblocked. Defaults to 30s when not provided.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<string> Evaluate(string @script, ulong? @timeoutMs);
+    /// <summary>
     /// Finds an element matching the CSS selector.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
     Task<Element> FindElement(string @selector);
+    /// <summary>
+    /// Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    Task<Element[]> FindElements(string @selector);
     /// <exception cref="XcelerateException"></exception>
     Task GoBack();
     /// <summary>
@@ -2494,6 +2692,41 @@ public class Page : IPage, IDisposable {
     
     
     /// <summary>
+    /// Executes an arbitrary JavaScript expression/script in the page's context and
+    /// returns its result serialized as a JSON string.
+    ///
+    /// Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+    /// after the stealth payload has already been injected for this page, so it does not
+    /// bypass or race the anti-detection setup.
+    ///
+    /// `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+    /// blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+    /// `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+    /// never replies until the loop is unblocked. Defaults to 30s when not provided.
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<string> Evaluate(string @script, ulong? @timeoutMs) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_evaluate(thisPtr, FfiConverterString.INSTANCE.Lower(@script), FfiConverterOptionalUInt64.INSTANCE.Lower(@timeoutMs));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
+        // Lift
+        (result) => FfiConverterString.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
     /// Finds an element matching the CSS selector.
     /// </summary>
     /// <exception cref="XcelerateException"></exception>
@@ -2513,6 +2746,31 @@ public class Page : IPage, IDisposable {
         (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_pointer(future),
         // Lift
         (result) => FfiConverterTypeElement.INSTANCE.Lift(result),
+        // Error
+        FfiConverterTypeXcelerateError.INSTANCE
+    );
+    }
+    
+    /// <summary>
+    /// Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
+    /// </summary>
+    /// <exception cref="XcelerateException"></exception>
+    public async Task<Element[]> FindElements(string @selector) {
+    return await _UniFFIAsync.UniffiRustCallAsync(
+        // Get rust future
+        CallWithPointer(thisPtr => {
+            return _UniFFILib.uniffi_xcelerate_fn_method_page_find_elements(thisPtr, FfiConverterString.INSTANCE.Lower(@selector));
+        }),
+        // Poll
+        (IntPtr future, IntPtr continuation, IntPtr data) => _UniFFILib.ffi_xcelerate_rust_future_poll_rust_buffer(future, continuation, data),
+        // Complete
+        (IntPtr future, ref UniffiRustCallStatus status) => {
+            return _UniFFILib.ffi_xcelerate_rust_future_complete_rust_buffer(future, ref status);
+        },
+        // Free
+        (IntPtr future) => _UniFFILib.ffi_xcelerate_rust_future_free_rust_buffer(future),
+        // Lift
+        (result) => FfiConverterSequenceTypeElement.INSTANCE.Lift(result),
         // Error
         FfiConverterTypeXcelerateError.INSTANCE
     );
@@ -2917,6 +3175,10 @@ public class XcelerateException: UniffiException {
         public InternalException(string message): base(message) {}
     }
     
+    public class Timeout: XcelerateException {
+        public Timeout(string message): base(message) {}
+    }
+    
 }
 
 public class FfiConverterTypeXcelerateError : FfiConverterRustBuffer<XcelerateException>, CallStatusErrorHandler<XcelerateException> {
@@ -2931,6 +3193,7 @@ public class FfiConverterTypeXcelerateError : FfiConverterRustBuffer<XcelerateEx
             case 4: return new XcelerateException.HttpException(FfiConverterString.INSTANCE.Read(stream));
             case 5: return new XcelerateException.NotFound(FfiConverterString.INSTANCE.Read(stream));
             case 6: return new XcelerateException.InternalException(FfiConverterString.INSTANCE.Read(stream));
+            case 7: return new XcelerateException.Timeout(FfiConverterString.INSTANCE.Read(stream));
             default:
                 throw new InternalException(String.Format("invalid error value '{0}' in FfiConverterTypeXcelerateError.Read()", value));
         }
@@ -2960,8 +3223,42 @@ public class FfiConverterTypeXcelerateError : FfiConverterRustBuffer<XcelerateEx
             case XcelerateException.InternalException:
                 stream.WriteInt(6);
                 break;
+            case XcelerateException.Timeout:
+                stream.WriteInt(7);
+                break;
             default:
                 throw new InternalException(String.Format("invalid error value '{0}' in FfiConverterTypeXcelerateError.Write()", value));
+        }
+    }
+}
+
+
+
+
+public class FfiConverterOptionalUInt64: FfiConverterRustBuffer<ulong?> {
+    public static FfiConverterOptionalUInt64 INSTANCE = new FfiConverterOptionalUInt64();
+
+    public override ulong? Read(BigEndianStream stream) {
+        if (stream.ReadByte() == 0) {
+            return null;
+        }
+        return FfiConverterUInt64.INSTANCE.Read(stream);
+    }
+
+    public override int AllocationSize(ulong? value) {
+        if (value == null) {
+            return 1;
+        } else {
+            return 1 + FfiConverterUInt64.INSTANCE.AllocationSize((ulong)value);
+        }
+    }
+
+    public override void Write(ulong? value, BigEndianStream stream) {
+        if (value == null) {
+            stream.WriteByte(0);
+        } else {
+            stream.WriteByte(1);
+            FfiConverterUInt64.INSTANCE.Write((ulong)value, stream);
         }
     }
 }
@@ -2994,6 +3291,52 @@ public class FfiConverterOptionalString: FfiConverterRustBuffer<string?> {
             stream.WriteByte(1);
             FfiConverterString.INSTANCE.Write((string)value, stream);
         }
+    }
+}
+
+
+
+
+public class FfiConverterSequenceTypeElement: FfiConverterRustBuffer<Element[]> {
+    public static FfiConverterSequenceTypeElement INSTANCE = new FfiConverterSequenceTypeElement();
+
+    public override Element[]  Read(BigEndianStream stream) {
+        var length = stream.ReadInt();
+        if (length == 0) {
+            return [];
+        }
+
+        var result = new Element[(length)];
+        var readFn = FfiConverterTypeElement.INSTANCE.Read;
+        for (int i = 0; i < length; i++) {
+            result[i] = readFn(stream);
+        }
+        return result;
+    }
+
+    public override int AllocationSize(Element[]  value) {
+        var sizeForLength = 4;
+
+        // details/1-empty-list-as-default-method-parameter.md
+        if (value == null) {
+            return sizeForLength;
+        }
+
+        var allocationSizeFn = FfiConverterTypeElement.INSTANCE.AllocationSize;
+        var sizeForItems = value.Sum(item => allocationSizeFn(item));
+        return sizeForLength + sizeForItems;
+    }
+
+    public override void Write(Element[] value, BigEndianStream stream) {
+        // details/1-empty-list-as-default-method-parameter.md
+        if (value == null) {
+            stream.WriteInt(0);
+            return;
+        }
+
+        stream.WriteInt(value.Length);
+        var writerFn = FfiConverterTypeElement.INSTANCE.Write;
+        value.ForEach(item => writerFn(item, stream));
     }
 }
 

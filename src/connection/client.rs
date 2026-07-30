@@ -31,21 +31,41 @@ impl CdpClient {
         self.event_tx.subscribe()
     }
 
-    pub async fn execute<T: CdpCommand>(&self, params: T) -> XcelerateResult<T::Response> {
+    pub async fn execute<T: CdpCommand + 'static>(&self, params: T) -> XcelerateResult<T::Response> {
         self.execute_with_session(None, params).await
     }
 
-    pub async fn execute_with_session<T: CdpCommand>(
-        &self, 
-        session_id: Option<&str>, 
+    pub async fn execute_with_session<T: CdpCommand + 'static>(
+        &self,
+        session_id: Option<&str>,
         params: T
     ) -> XcelerateResult<T::Response> {
-        let id = self.next_id.fetch_add(1, Ordering::SeqCst);
         let params_val = serde_json::to_value(params)?;
-        
+        let res = self.execute_raw(T::METHOD, session_id, params_val).await?;
+        let response: T::Response = serde_json::from_value(res)?;
+        Ok(response)
+    }
+
+    /// Non-generic core used both by `execute_with_session` and directly by
+    /// `#[uniffi::export]` methods. Keeping this free of generic type params
+    /// over lifetime-parameterized `CdpCommand` implementors is required:
+    /// calling a generic `execute::<T>` directly inside an async fn exported
+    /// via `#[uniffi::export]` triggers a "implementation is not general
+    /// enough" HRTB error from rustc when `T` carries a lifetime, because the
+    /// exported future's auto-trait check ends up requiring the bound to hold
+    /// for an unrelated pair of lifetimes rather than the single lifetime the
+    /// crate's `CdpCommand` impls actually provide.
+    pub async fn execute_raw(
+        &self,
+        method: &'static str,
+        session_id: Option<&str>,
+        params_val: Value,
+    ) -> XcelerateResult<Value> {
+        let id = self.next_id.fetch_add(1, Ordering::SeqCst);
+
         let mut envelope = json!({
             "id": id,
-            "method": T::METHOD,
+            "method": method,
             "params": params_val,
         });
 
@@ -56,8 +76,6 @@ impl CdpClient {
         let (tx, rx) = oneshot::channel();
         self.cmd_tx.send((id, envelope, tx)).map_err(|_| XcelerateError::InternalError)?;
 
-        let res = rx.await.map_err(|_| XcelerateError::InternalError)??;
-        let response: T::Response = serde_json::from_value(res)?;
-        Ok(response)
+        rx.await.map_err(|_| XcelerateError::InternalError)?
     }
 }

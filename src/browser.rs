@@ -104,20 +104,30 @@ impl Browser {
 
     pub async fn new_page(self: Arc<Self>, url: String) -> XcelerateResult<Arc<Page>> {
         // 1. Create target with about:blank so we can inject scripts before loading the real URL
-        let target = self.client.execute(browser_protocol::target::CreateTargetParams {
-            url: "about:blank".into(),
-            ..Default::default()
-        }).await?;
+        let create_target_params = browser_protocol::target::CreateTargetParams::builder("about:blank").build();
+        let create_target_val = serde_json::to_value(&create_target_params)?;
+        let target_raw = self.client.execute_raw(
+            browser_protocol::target::CreateTargetParams::METHOD,
+            None,
+            create_target_val,
+        ).await?;
+        let target: browser_protocol::target::CreateTargetReturns = serde_json::from_value(target_raw)?;
 
         // 2. Attach to target
-        let session = self.client.execute(browser_protocol::target::AttachToTargetParams {
-            targetId: target.targetId,
-            flatten: Some(true),
-        }).await?;
+        let attach_params = browser_protocol::target::AttachToTargetParams::builder(target.target_id().clone())
+            .flatten(true)
+            .build();
+        let attach_val = serde_json::to_value(&attach_params)?;
+        let session_raw = self.client.execute_raw(
+            browser_protocol::target::AttachToTargetParams::METHOD,
+            None,
+            attach_val,
+        ).await?;
+        let session: browser_protocol::target::AttachToTargetReturns = serde_json::from_value(session_raw)?;
 
         let page = Arc::new(Page {
             client: Arc::clone(&self.client),
-            session_id: session.sessionId,
+            session_id: session.session_id().to_string(),
             mouse_x: std::sync::Mutex::new(100.0),
             mouse_y: std::sync::Mutex::new(100.0),
         });
@@ -126,9 +136,11 @@ impl Browser {
         if self._stealth {
             page.add_script_to_evaluate_on_new_document(CDC_PAYLOAD.to_string()).await?;
             // We also need to enable the Page domain for some events to fire correctly
-            self.client.execute_with_session(
+            let enable_val = serde_json::to_value(&browser_protocol::page::EnableParams::default())?;
+            self.client.execute_raw(
+                browser_protocol::page::EnableParams::METHOD,
                 Some(&page.session_id),
-                browser_protocol::page::EnableParams { ..Default::default() }
+                enable_val,
             ).await?;
         }
 
@@ -140,14 +152,18 @@ impl Browser {
 
     /// Returns the browser version information.
     pub async fn version(&self) -> XcelerateResult<String> {
-        let res = self.client.execute(browser_protocol::browser::GetVersionParams {}).await?;
-        Ok(format!("{} (Protocol {})", res.product, res.protocolVersion))
+        let params_val = serde_json::to_value(&browser_protocol::browser::GetVersionParams {})?;
+        let raw = self.client.execute_raw(browser_protocol::browser::GetVersionParams::METHOD, None, params_val).await?;
+        let res: browser_protocol::browser::GetVersionReturns = serde_json::from_value(raw)?;
+        Ok(format!("{} (Protocol {})", res.product(), res.protocol_version()))
     }
 
     /// Closes the browser and kills the process.
     pub async fn close(&self) -> XcelerateResult<()> {
         // Try to close gracefully via CDP first
-        let _ = self.client.execute(browser_protocol::browser::CloseParams {}).await;
+        if let Ok(params_val) = serde_json::to_value(&browser_protocol::browser::CloseParams {}) {
+            let _ = self.client.execute_raw(browser_protocol::browser::CloseParams::METHOD, None, params_val).await;
+        }
         
         // Kill the process if it's still running
         let mut lock = self._process.lock().await;

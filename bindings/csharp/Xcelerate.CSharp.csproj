@@ -26,13 +26,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="xcelerate.dll" Pack="true" PackagePath="runtimes/win-x64/native/">
+    <None Include="xcelerate.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Condition="Exists('xcelerate.dll')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="libxcelerate.so" Pack="true" PackagePath="runtimes/linux-x64/native/">
+    <None Include="libxcelerate.so" Pack="true" PackagePath="runtimes/linux-x64/native/" Condition="Exists('libxcelerate.so')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="libxcelerate.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/">
+    <None Include="libxcelerate.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/" Condition="Exists('libxcelerate.dylib')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />

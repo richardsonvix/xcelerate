@@ -250,7 +250,9 @@ com convenção de nome adaptada (`snake_case` em Python/Rust,
 | `GoBack` | `Task GoBack()` | `window.history.back()` |
 | `WaitForNavigation` | `Task WaitForNavigation()` | polling em `document.readyState === 'complete'`, timeout 30s |
 | `FindElement` | `Task<Element> FindElement(string selector)` | `document.querySelector`, erro se não achar |
+| `FindElements` | `Task<List<Element>> FindElements(string selector)` | `document.querySelectorAll`, lista vazia se nada casar |
 | `WaitForSelector` | `Task<Element> WaitForSelector(string selector)` | polling a cada 250ms por até 30s |
+| `Evaluate` | `Task<string> Evaluate(string script)` | executa expressão/script JS avulso via `Runtime.evaluate` (`returnByValue` + `awaitPromise`), retorna o resultado serializado em JSON (string `"null"` se sem retorno); lança `CdpResponseException` se o script lançar exceção |
 | `Title` | `Task<string> Title()` | `document.title` |
 | `Content` | `Task<string> Content()` | `document.documentElement.outerHTML` |
 | `Screenshot` | `Task<byte[]> Screenshot()` | screenshot do viewport (PNG) |
@@ -277,6 +279,8 @@ Todos os métodos que retornam `Page`/`Element` fazem *method chaining*
 | `Text` | `Task<string> Text()` | `innerText` |
 | `Attribute` | `Task<string?> Attribute(string name)` | `getAttribute(name)` |
 | `InnerHtml` | `Task<string> InnerHtml()` | `innerHTML` |
+| `DispatchEvent` | `Task DispatchEvent(string eventType)` | dispara `new Event(eventType, { bubbles: true, cancelable: true })` no elemento (ex.: `"blur"`, `"change"`, `"input"`, `"focus"`) |
+| `Evaluate` | `Task<string> Evaluate(string script)` | executa um corpo de função JS com `this` = o elemento (via `Runtime.callFunctionOn`, `returnByValue` + `awaitPromise`), retorna o resultado serializado em JSON |
 
 ### Erros (`XcelerateException`, hierarquia)
 
@@ -292,10 +296,9 @@ Todos os métodos que retornam `Page`/`Element` fazem *method chaining*
   dedicada.
 - Sem múltiplas abas/páginas geridas centralmente pelo `Browser` (cada
   `NewPage` é independente; não há `Browser.Pages()` listando as existentes).
-- Sem espera por múltiplos elementos / seletor com índice.
-- `FindElement` interpola a string do seletor diretamente em uma expressão
-  JS (`document.querySelector('<selector>')`) sem escapar aspas — seletores
-  contendo `'` não escapado quebram a expressão.
+- `FindElements`/`GetProperties` não garantem ordem estrita para NodeLists
+  muito grandes (na prática o V8 retorna em ordem de índice, mas isso não é
+  uma garantia formal do protocolo CDP).
 - O patch binário depende de uma assinatura de bytes (`{window.cdc.*?;}`)
   que pode deixar de existir em versões futuras do Chrome; se isso ocorrer,
   o patch é pulado silenciosamente (sem erro, sem aviso).

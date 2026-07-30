@@ -2,7 +2,7 @@ use crate::connection::CdpClient;
 use crate::element::Element;
 use crate::error::{XcelerateResult, XcelerateError};
 use std::sync::Arc;
-use browser_protocol::page::{GetLayoutMetricsParams, CaptureScreenshotParams, ReloadParams, NavigateParams, EnableParams};
+use browser_protocol::page::{GetLayoutMetricsParams, GetLayoutMetricsReturns, CaptureScreenshotParams, CaptureScreenshotReturns, ReloadParams, NavigateParams, EnableParams};
 use browser_protocol::emulation::{SetDeviceMetricsOverrideParams, ClearDeviceMetricsOverrideParams};
 
 pub(crate) struct Lcg {
@@ -46,25 +46,129 @@ pub struct Page {
 impl Page {
     /// Finds an element matching the CSS selector.
     pub async fn find_element(self: Arc<Self>, selector: String) -> XcelerateResult<Arc<Element>> {
-        let js = format!("document.querySelector('{}')", selector);
-        
+        let selector_json = serde_json::to_string(&selector)?;
+        let js = format!("document.querySelector({})", selector_json);
+
         // Evaluate returns complex JSON, we handle it internally
-        self.client.execute_with_session(
+        let params = js_protocol::runtime::EvaluateParams::builder(js).build();
+        let params_val = serde_json::to_value(&params)?;
+        let raw = self.client.execute_raw(
+            js_protocol::runtime::EvaluateParams::METHOD,
             Some(&self.session_id),
-            js_protocol::runtime::EvaluateParams {
-                expression: js,
-                ..Default::default()
+            params_val,
+        ).await?;
+        let result: js_protocol::runtime::EvaluateReturns = serde_json::from_value(raw)?;
+
+        if let Some(obj_id) = result.result().object_id() {
+            Ok(Arc::new(Element {
+                page: self.clone(),
+                object_id: obj_id.to_string(),
+            }))
+        } else {
+            Err(XcelerateError::NotFound(selector))
+        }
+    }
+
+    /// Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
+    pub async fn find_elements(self: Arc<Self>, selector: String) -> XcelerateResult<Vec<Arc<Element>>> {
+        let selector_json = serde_json::to_string(&selector)?;
+        let js = format!("document.querySelectorAll({})", selector_json);
+
+        // 1. Evaluate the querySelectorAll call to get a remote handle (objectId) to the NodeList.
+        let eval_params = js_protocol::runtime::EvaluateParams::builder(js).build();
+        let eval_params_val = serde_json::to_value(&eval_params)?;
+        let raw = self.client.execute_raw(
+            js_protocol::runtime::EvaluateParams::METHOD,
+            Some(&self.session_id),
+            eval_params_val,
+        ).await?;
+        let list_result: js_protocol::runtime::EvaluateReturns = serde_json::from_value(raw)?;
+
+        let list_object_id = match list_result.result().object_id() {
+            Some(id) => id.to_string(),
+            None => return Ok(Vec::new()),
+        };
+
+        // 2. Enumerate the NodeList's own properties to resolve each entry's objectId.
+        let get_props_params = js_protocol::runtime::GetPropertiesParams::builder(list_object_id.clone())
+            .own_properties(true)
+            .build();
+        let get_props_val = serde_json::to_value(&get_props_params)?;
+        let props_raw = self.client.execute_raw(
+            js_protocol::runtime::GetPropertiesParams::METHOD,
+            Some(&self.session_id),
+            get_props_val,
+        ).await;
+
+        // The NodeList wrapper object itself is no longer needed once its entries are resolved.
+        let release_params = js_protocol::runtime::ReleaseObjectParams::builder(list_object_id).build();
+        let release_val = serde_json::to_value(&release_params)?;
+        let _ = self.client.execute_raw(
+            js_protocol::runtime::ReleaseObjectParams::METHOD,
+            Some(&self.session_id),
+            release_val,
+        ).await;
+
+        let props: js_protocol::runtime::GetPropertiesReturns = serde_json::from_value(props_raw?)?;
+
+        let mut elements = Vec::new();
+        for prop in props.result() {
+            // Array-like indices are numeric strings ("0", "1", ...); skip "length" and other own properties.
+            if prop.name().parse::<usize>().is_err() {
+                continue;
             }
-        ).await.and_then(|result| {
-            if let Some(obj_id) = result.result.objectId {
-                Ok(Arc::new(Element {
-                    page: self.clone(),
-                    object_id: obj_id,
-                }))
-            } else {
-                Err(XcelerateError::NotFound(selector))
+            if let Some(value) = prop.value() {
+                if let Some(obj_id) = value.object_id() {
+                    elements.push(Arc::new(Element {
+                        page: self.clone(),
+                        object_id: obj_id.to_string(),
+                    }));
+                }
             }
-        })
+        }
+
+        Ok(elements)
+    }
+
+    /// Executes an arbitrary JavaScript expression/script in the page's context and
+    /// returns its result serialized as a JSON string.
+    ///
+    /// Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+    /// after the stealth payload has already been injected for this page, so it does not
+    /// bypass or race the anti-detection setup.
+    ///
+    /// `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+    /// blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+    /// `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+    /// never replies until the loop is unblocked. Defaults to 30s when not provided.
+    pub async fn evaluate(&self, script: String, timeout_ms: Option<u64>) -> XcelerateResult<String> {
+        let params = js_protocol::runtime::EvaluateParams::builder(script)
+            .return_by_value(true)
+            .await_promise(true)
+            .build();
+        let params_val = serde_json::to_value(&params)?;
+        let timeout = std::time::Duration::from_millis(timeout_ms.unwrap_or(30_000));
+
+        let raw = tokio::time::timeout(
+            timeout,
+            self.client.execute_raw(
+                js_protocol::runtime::EvaluateParams::METHOD,
+                Some(&self.session_id),
+                params_val,
+            ),
+        )
+        .await
+        .map_err(|_| XcelerateError::Timeout("evaluate timed out".into()))??;
+        let res: js_protocol::runtime::EvaluateReturns = serde_json::from_value(raw)?;
+
+        if let Some(exception) = res.exception_details() {
+            let message = exception.exception()
+                .and_then(|e| e.description().map(|d| d.to_string()).or_else(|| e.value().map(|v| v.to_string())))
+                .unwrap_or_else(|| exception.text().to_string());
+            return Err(XcelerateError::CdpResponseError { code: 0, message });
+        }
+
+        Ok(res.result().value().map(|v| v.to_string()).unwrap_or_else(|| "null".to_string()))
     }
 
     /// Waits for an element matching the selector to appear in the DOM.
@@ -89,15 +193,16 @@ impl Page {
 
         while start.elapsed() < timeout {
             // Internal call to evaluate
-            let res = self.client.execute_with_session(
+            let params = js_protocol::runtime::EvaluateParams::builder("document.readyState").build();
+            let params_val = serde_json::to_value(&params)?;
+            let raw = self.client.execute_raw(
+                js_protocol::runtime::EvaluateParams::METHOD,
                 Some(&self.session_id),
-                js_protocol::runtime::EvaluateParams {
-                    expression: "document.readyState".into(),
-                    ..Default::default()
-                }
+                params_val,
             ).await?;
-            
-            if res.result.value.is_some_and(|v| v.as_str() == Some("complete")) {
+            let res: js_protocol::runtime::EvaluateReturns = serde_json::from_value(raw)?;
+
+            if res.result().value().is_some_and(|v| v.as_str() == Some("complete")) {
                 return Ok(());
             }
             tokio::time::sleep(std::time::Duration::from_millis(250)).await;
@@ -108,121 +213,102 @@ impl Page {
 
     /// Reloads the page.
     pub async fn reload(&self) -> XcelerateResult<()> {
-        self.client.execute_with_session(
-            Some(&self.session_id),
-            ReloadParams { ..Default::default() }
-        ).await.map(|_| ())
+        let params = ReloadParams::default();
+        let params_val = serde_json::to_value(&params)?;
+        self.client.execute_raw(ReloadParams::METHOD, Some(&self.session_id), params_val).await?;
+        Ok(())
     }
 
     /// Navigates to a URL.
     pub async fn navigate(&self, url: String) -> XcelerateResult<()> {
-        self.client.execute_with_session(
-            Some(&self.session_id),
-            NavigateParams { 
-                url, 
-                ..Default::default() 
-            }
-        ).await.map(|_| ())
+        let params = NavigateParams::builder(url).build();
+        let params_val = serde_json::to_value(&params)?;
+        self.client.execute_raw(NavigateParams::METHOD, Some(&self.session_id), params_val).await?;
+        Ok(())
     }
 
     /// Returns the page title.
     pub async fn title(&self) -> XcelerateResult<String> {
-        let res = self.client.execute_with_session(
+        let params = js_protocol::runtime::EvaluateParams::builder("document.title").build();
+        let params_val = serde_json::to_value(&params)?;
+        let raw = self.client.execute_raw(
+            js_protocol::runtime::EvaluateParams::METHOD,
             Some(&self.session_id),
-            js_protocol::runtime::EvaluateParams {
-                expression: "document.title".into(),
-                ..Default::default()
-            }
+            params_val,
         ).await?;
-        Ok(res.result.value.and_then(|v| v.as_str().map(|s| s.to_string())).unwrap_or_default())
+        let res: js_protocol::runtime::EvaluateReturns = serde_json::from_value(raw)?;
+        Ok(res.result().value().and_then(|v| v.as_str().map(|s| s.to_string())).unwrap_or_default())
     }
 
     /// Returns the full HTML content of the page.
     pub async fn content(&self) -> XcelerateResult<String> {
-        let res = self.client.execute_with_session(
+        let params = js_protocol::runtime::EvaluateParams::builder("document.documentElement.outerHTML").build();
+        let params_val = serde_json::to_value(&params)?;
+        let raw = self.client.execute_raw(
+            js_protocol::runtime::EvaluateParams::METHOD,
             Some(&self.session_id),
-            js_protocol::runtime::EvaluateParams {
-                expression: "document.documentElement.outerHTML".into(),
-                ..Default::default()
-            }
+            params_val,
         ).await?;
-        Ok(res.result.value.and_then(|v| v.as_str().map(|s| s.to_string())).unwrap_or_default())
+        let res: js_protocol::runtime::EvaluateReturns = serde_json::from_value(raw)?;
+        Ok(res.result().value().and_then(|v| v.as_str().map(|s| s.to_string())).unwrap_or_default())
     }
 
     pub async fn screenshot(&self) -> XcelerateResult<Vec<u8>> {
-        let res = self.client.execute_with_session(
-            Some(&self.session_id),
-            CaptureScreenshotParams { ..Default::default() }
-        ).await?;
-        self.decode_base64(res.data)
+        let params = CaptureScreenshotParams::builder().build();
+        let params_val = serde_json::to_value(&params)?;
+        let raw = self.client.execute_raw(CaptureScreenshotParams::METHOD, Some(&self.session_id), params_val).await?;
+        let res: CaptureScreenshotReturns = serde_json::from_value(raw)?;
+        self.decode_base64(res.data().to_string())
     }
 
     pub async fn screenshot_full(&self) -> XcelerateResult<Vec<u8>> {
-        let _ = self.client.execute_with_session(
-            Some(&self.session_id),
-            EnableParams { ..Default::default() }
-        ).await?;
+        let enable_val = serde_json::to_value(&EnableParams::default())?;
+        let _ = self.client.execute_raw(EnableParams::METHOD, Some(&self.session_id), enable_val).await?;
 
-        let metrics = self.client.execute_with_session(
-            Some(&self.session_id),
-            GetLayoutMetricsParams {}
-        ).await?;
+        let metrics_val = serde_json::to_value(&GetLayoutMetricsParams {})?;
+        let metrics_raw = self.client.execute_raw(GetLayoutMetricsParams::METHOD, Some(&self.session_id), metrics_val).await?;
+        let metrics: GetLayoutMetricsReturns = serde_json::from_value(metrics_raw)?;
 
-        let width = metrics.contentSize.width as u64;
-        let height = metrics.contentSize.height as i64;
+        let width = metrics.content_size().width() as u64;
+        let height = metrics.content_size().height() as i64;
 
-        let mut params = SetDeviceMetricsOverrideParams { ..Default::default() };
-        params.width = width;
-        params.height = height;
-        params.deviceScaleFactor = 1.0;
-        params.mobile = false;
+        let override_params = SetDeviceMetricsOverrideParams::builder(width, height, 1.0, false).build();
+        let override_val = serde_json::to_value(&override_params)?;
+        self.client.execute_raw(SetDeviceMetricsOverrideParams::METHOD, Some(&self.session_id), override_val).await?;
 
-        self.client.execute_with_session(
-            Some(&self.session_id),
-            params
-        ).await?;
+        let screenshot_val = serde_json::to_value(&CaptureScreenshotParams::builder().build())?;
+        let screenshot_raw = self.client.execute_raw(CaptureScreenshotParams::METHOD, Some(&self.session_id), screenshot_val).await?;
+        let res: CaptureScreenshotReturns = serde_json::from_value(screenshot_raw)?;
 
-        let res = self.client.execute_with_session(
-            Some(&self.session_id),
-            CaptureScreenshotParams { ..Default::default() }
-        ).await?;
+        let clear_val = serde_json::to_value(&ClearDeviceMetricsOverrideParams {})?;
+        let _ = self.client.execute_raw(ClearDeviceMetricsOverrideParams::METHOD, Some(&self.session_id), clear_val).await?;
 
-        let _ = self.client.execute_with_session(
-            Some(&self.session_id),
-            ClearDeviceMetricsOverrideParams {}
-        ).await?;
-
-        self.decode_base64(res.data)
+        self.decode_base64(res.data().to_string())
     }
 
     pub async fn pdf(&self) -> XcelerateResult<Vec<u8>> {
-        let res = self.client.execute_with_session(
-            Some(&self.session_id),
-            browser_protocol::page::PrintToPDFParams { ..Default::default() }
-        ).await?;
-        self.decode_base64(res.data)
+        let params_val = serde_json::to_value(&browser_protocol::page::PrintToPDFParams::builder().build())?;
+        let raw = self.client.execute_raw(browser_protocol::page::PrintToPDFParams::METHOD, Some(&self.session_id), params_val).await?;
+        let res: browser_protocol::page::PrintToPDFReturns = serde_json::from_value(raw)?;
+        self.decode_base64(res.data().to_string())
     }
 
     /// Evaluates a script on every new document.
     pub async fn add_script_to_evaluate_on_new_document(&self, source: String) -> XcelerateResult<String> {
-        let res = self.client.execute_with_session(
+        let params = browser_protocol::page::AddScriptToEvaluateOnNewDocumentParams::builder(source).build();
+        let params_val = serde_json::to_value(&params)?;
+        let raw = self.client.execute_raw(
+            browser_protocol::page::AddScriptToEvaluateOnNewDocumentParams::METHOD,
             Some(&self.session_id),
-            browser_protocol::page::AddScriptToEvaluateOnNewDocumentParams {
-                source,
-                ..Default::default()
-            }
+            params_val,
         ).await?;
-        Ok(res.identifier)
+        let res: browser_protocol::page::AddScriptToEvaluateOnNewDocumentReturns = serde_json::from_value(raw)?;
+        Ok(res.identifier().to_string())
     }
 
     pub async fn go_back(&self) -> XcelerateResult<()> {
-        let _ = self.client.execute_with_session(
-            Some(&self.session_id),
-            js_protocol::runtime::EvaluateParams {
-                expression: "window.history.back()".into(),
-                ..Default::default()
-            }
-        ).await?;
+        let params_val = serde_json::to_value(&js_protocol::runtime::EvaluateParams::builder("window.history.back()").build())?;
+        let _ = self.client.execute_raw(js_protocol::runtime::EvaluateParams::METHOD, Some(&self.session_id), params_val).await?;
         Ok(())
     }
 
@@ -296,16 +382,14 @@ impl Page {
                 curr_y += rng.range(-0.4, 0.4);
             }
 
-            let params = browser_protocol::input::DispatchMouseEventParams {
-                type_: "mouseMoved".into(),
-                x: curr_x,
-                y: curr_y,
-                ..Default::default()
-            };
+            let params_val = serde_json::to_value(
+                &browser_protocol::input::DispatchMouseEventParams::builder("mouseMoved", curr_x, curr_y).build()
+            )?;
 
-            self.client.execute_with_session(
+            self.client.execute_raw(
+                browser_protocol::input::DispatchMouseEventParams::METHOD,
                 Some(&self.session_id),
-                params
+                params_val,
             ).await?;
 
             let delay_ms = rng.range(6.0, 14.0) as u64;
@@ -337,17 +421,16 @@ impl Page {
             "forward" => browser_protocol::input::MouseButton::Forward,
             _ => browser_protocol::input::MouseButton::None,
         };
-        let params = browser_protocol::input::DispatchMouseEventParams {
-            type_: "mousePressed".into(),
-            x: cx,
-            y: cy,
-            button: Some(btn),
-            clickCount: Some(1),
-            ..Default::default()
-        };
-        self.client.execute_with_session(
+        let params_val = serde_json::to_value(
+            &browser_protocol::input::DispatchMouseEventParams::builder("mousePressed", cx, cy)
+                .button(btn)
+                .click_count(1)
+                .build()
+        )?;
+        self.client.execute_raw(
+            browser_protocol::input::DispatchMouseEventParams::METHOD,
             Some(&self.session_id),
-            params
+            params_val,
         ).await?;
         Ok(self)
     }
@@ -367,17 +450,16 @@ impl Page {
             "forward" => browser_protocol::input::MouseButton::Forward,
             _ => browser_protocol::input::MouseButton::None,
         };
-        let params = browser_protocol::input::DispatchMouseEventParams {
-            type_: "mouseReleased".into(),
-            x: cx,
-            y: cy,
-            button: Some(btn),
-            clickCount: Some(1),
-            ..Default::default()
-        };
-        self.client.execute_with_session(
+        let params_val = serde_json::to_value(
+            &browser_protocol::input::DispatchMouseEventParams::builder("mouseReleased", cx, cy)
+                .button(btn)
+                .click_count(1)
+                .build()
+        )?;
+        self.client.execute_raw(
+            browser_protocol::input::DispatchMouseEventParams::METHOD,
             Some(&self.session_id),
-            params
+            params_val,
         ).await?;
         Ok(self)
     }
