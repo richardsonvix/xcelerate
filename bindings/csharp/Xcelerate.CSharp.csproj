@@ -5,12 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssemblyName>Xcelerate.Net</AssemblyName>
-    <PackageId>Xcelerate</PackageId>
-    <Version>0.1.6</Version>
-    <Authors>AzzoDude</Authors>
-    <Copyright>Copyright © 2026 AzzoDude</Copyright>
-    <Description>C# wrapper for the xcelerate Rust CDP library.</Description>
+    <AssemblyName>XcelerateAthenas</AssemblyName>
+    <PackageId>XcelerateAthenas</PackageId>
+    <Authors></Authors>
+    <Copyright>Athenas Tecnologia</Copyright>
+    <Description>Wrapper C# baseado no Xcelerate 0.1.6 Rust CDP library (AzzoDude), mas com diversas melhorias sobre limitações originais.</Description>
     <DefaultItemExcludes>$(DefaultItemExcludes);Xcelerate.TestApp\**</DefaultItemExcludes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/AzzoDude/xcelerate</RepositoryUrl>
@@ -23,7 +22,44 @@
     <OptimizationPreference>Speed</OptimizationPreference>
     <StackTraceSupport>false</StackTraceSupport>
     <InvariantGlobalization>true</InvariantGlobalization>
+
+    <VersionFile>$(MSBuildThisFileDirectory)VERSION</VersionFile>
   </PropertyGroup>
+
+  <!--
+    Auto-increments the patch version in VERSION once per outer `dotnet build`/`dotnet pack` invocation
+    (the cross-targeting dispatcher project, not each inner net8.0/net9.0/net10.0 sub-build), and stamps
+    the result into $(Version) before PackageId/AssemblyInfo/nuspec generation read it.
+  -->
+  <Target Name="BumpBuildVersion" BeforeTargets="Build;Pack;_IntermediatePack;GenerateNuspec;GetAssemblyVersion;CoreGenerateAssemblyInfo" Condition="'$(IsCrossTargetingBuild)' == 'true'">
+    <ReadLinesFromFile File="$(VersionFile)" Condition="Exists('$(VersionFile)')">
+      <Output TaskParameter="Lines" ItemName="CurrentVersionLine" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <CurrentVersion Condition="'@(CurrentVersionLine)' != ''">@(CurrentVersionLine)</CurrentVersion>
+      <CurrentVersion Condition="'$(CurrentVersion)' == ''">0.8.1</CurrentVersion>
+      <VersionMajorMinor>$(CurrentVersion.Substring(0, $(CurrentVersion.LastIndexOf('.'))))</VersionMajorMinor>
+      <VersionPatch>$(CurrentVersion.Substring($([MSBuild]::Add($(CurrentVersion.LastIndexOf('.')), 1))))</VersionPatch>
+      <VersionPatch>$([MSBuild]::Add($(VersionPatch), 1))</VersionPatch>
+      <NewVersion>$(VersionMajorMinor).$(VersionPatch)</NewVersion>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(VersionFile)" Lines="$(NewVersion)" Overwrite="true" />
+    <PropertyGroup>
+      <Version>$(NewVersion)</Version>
+      <PackageVersion>$(NewVersion)</PackageVersion>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Inner (per-TFM) builds re-read the version the outer dispatcher just wrote, without incrementing again. -->
+  <Target Name="ApplyBuildVersion" BeforeTargets="GetAssemblyVersion;CoreGenerateAssemblyInfo" Condition="'$(IsCrossTargetingBuild)' != 'true'">
+    <ReadLinesFromFile File="$(VersionFile)" Condition="Exists('$(VersionFile)')">
+      <Output TaskParameter="Lines" ItemName="CurrentVersionLine" />
+    </ReadLinesFromFile>
+    <PropertyGroup Condition="'@(CurrentVersionLine)' != ''">
+      <Version>@(CurrentVersionLine)</Version>
+      <PackageVersion>@(CurrentVersionLine)</PackageVersion>
+    </PropertyGroup>
+  </Target>
 
   <ItemGroup>
     <None Include="xcelerate.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Condition="Exists('xcelerate.dll')">
