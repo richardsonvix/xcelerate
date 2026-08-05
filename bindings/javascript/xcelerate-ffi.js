@@ -48,6 +48,10 @@ export const ffiIntegrity = Object.freeze({
 
     "uniffi_xcelerate_checksum_method_element_click_stealth": 23670,
 
+    "uniffi_xcelerate_checksum_method_element_dispatch_event": 46108,
+
+    "uniffi_xcelerate_checksum_method_element_evaluate": 21137,
+
     "uniffi_xcelerate_checksum_method_element_focus": 30439,
 
     "uniffi_xcelerate_checksum_method_element_hover": 28667,
@@ -68,7 +72,11 @@ export const ffiIntegrity = Object.freeze({
 
     "uniffi_xcelerate_checksum_method_page_decode_base64": 40332,
 
+    "uniffi_xcelerate_checksum_method_page_evaluate": 28351,
+
     "uniffi_xcelerate_checksum_method_page_find_element": 12382,
+
+    "uniffi_xcelerate_checksum_method_page_find_elements": 33764,
 
     "uniffi_xcelerate_checksum_method_page_go_back": 14351,
 
@@ -491,6 +499,16 @@ function createBindingCore(libraryPath) {
     uniffi_xcelerate_fn_method_element_click_stealth_generic_abi: library.func("uniffi_xcelerate_fn_method_element_click_stealth", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle]),
 
 
+    uniffi_xcelerate_fn_method_element_dispatch_event: library.func("uniffi_xcelerate_fn_method_element_dispatch_event", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, ffiTypes.RustBuffer]),
+
+    uniffi_xcelerate_fn_method_element_dispatch_event_generic_abi: library.func("uniffi_xcelerate_fn_method_element_dispatch_event", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, ffiTypes.RustBuffer]),
+
+
+    uniffi_xcelerate_fn_method_element_evaluate: library.func("uniffi_xcelerate_fn_method_element_evaluate", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, ffiTypes.RustBuffer]),
+
+    uniffi_xcelerate_fn_method_element_evaluate_generic_abi: library.func("uniffi_xcelerate_fn_method_element_evaluate", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, ffiTypes.RustBuffer]),
+
+
     uniffi_xcelerate_fn_method_element_focus: library.func("uniffi_xcelerate_fn_method_element_focus", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle]),
 
     uniffi_xcelerate_fn_method_element_focus_generic_abi: library.func("uniffi_xcelerate_fn_method_element_focus", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle]),
@@ -551,9 +569,19 @@ function createBindingCore(libraryPath) {
     uniffi_xcelerate_fn_method_page_decode_base64_generic_abi: library.func("uniffi_xcelerate_fn_method_page_decode_base64", ffiTypes.RustBuffer, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, koffi.pointer(ffiTypes.RustCallStatus)]),
 
 
+    uniffi_xcelerate_fn_method_page_evaluate: library.func("uniffi_xcelerate_fn_method_page_evaluate", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, ffiTypes.RustBuffer]),
+
+    uniffi_xcelerate_fn_method_page_evaluate_generic_abi: library.func("uniffi_xcelerate_fn_method_page_evaluate", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer, ffiTypes.RustBuffer]),
+
+
     uniffi_xcelerate_fn_method_page_find_element: library.func("uniffi_xcelerate_fn_method_page_find_element", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer]),
 
     uniffi_xcelerate_fn_method_page_find_element_generic_abi: library.func("uniffi_xcelerate_fn_method_page_find_element", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer]),
+
+
+    uniffi_xcelerate_fn_method_page_find_elements: library.func("uniffi_xcelerate_fn_method_page_find_elements", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer]),
+
+    uniffi_xcelerate_fn_method_page_find_elements_generic_abi: library.func("uniffi_xcelerate_fn_method_page_find_elements", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle, ffiTypes.RustBuffer]),
 
 
     uniffi_xcelerate_fn_method_page_go_back: library.func("uniffi_xcelerate_fn_method_page_go_back", ffiTypes.UniffiHandle, [ffiTypes.UniffiHandle]),
@@ -886,6 +914,12 @@ function createBindingCore(libraryPath) {
     uniffi_xcelerate_checksum_method_element_click_stealth: library.func("uniffi_xcelerate_checksum_method_element_click_stealth", "uint16_t", []),
 
 
+    uniffi_xcelerate_checksum_method_element_dispatch_event: library.func("uniffi_xcelerate_checksum_method_element_dispatch_event", "uint16_t", []),
+
+
+    uniffi_xcelerate_checksum_method_element_evaluate: library.func("uniffi_xcelerate_checksum_method_element_evaluate", "uint16_t", []),
+
+
     uniffi_xcelerate_checksum_method_element_focus: library.func("uniffi_xcelerate_checksum_method_element_focus", "uint16_t", []),
 
 
@@ -916,7 +950,13 @@ function createBindingCore(libraryPath) {
     uniffi_xcelerate_checksum_method_page_decode_base64: library.func("uniffi_xcelerate_checksum_method_page_decode_base64", "uint16_t", []),
 
 
+    uniffi_xcelerate_checksum_method_page_evaluate: library.func("uniffi_xcelerate_checksum_method_page_evaluate", "uint16_t", []),
+
+
     uniffi_xcelerate_checksum_method_page_find_element: library.func("uniffi_xcelerate_checksum_method_page_find_element", "uint16_t", []),
+
+
+    uniffi_xcelerate_checksum_method_page_find_elements: library.func("uniffi_xcelerate_checksum_method_page_find_elements", "uint16_t", []),
 
 
     uniffi_xcelerate_checksum_method_page_go_back: library.func("uniffi_xcelerate_checksum_method_page_go_back", "uint16_t", []),
@@ -1161,6 +1201,10 @@ export function getChecksums(bindings = getFfiBindings()) {
 
     "uniffi_xcelerate_checksum_method_element_click_stealth": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_element_click_stealth(),
 
+    "uniffi_xcelerate_checksum_method_element_dispatch_event": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_element_dispatch_event(),
+
+    "uniffi_xcelerate_checksum_method_element_evaluate": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_element_evaluate(),
+
     "uniffi_xcelerate_checksum_method_element_focus": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_element_focus(),
 
     "uniffi_xcelerate_checksum_method_element_hover": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_element_hover(),
@@ -1181,7 +1225,11 @@ export function getChecksums(bindings = getFfiBindings()) {
 
     "uniffi_xcelerate_checksum_method_page_decode_base64": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_page_decode_base64(),
 
+    "uniffi_xcelerate_checksum_method_page_evaluate": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_page_evaluate(),
+
     "uniffi_xcelerate_checksum_method_page_find_element": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_page_find_element(),
+
+    "uniffi_xcelerate_checksum_method_page_find_elements": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_page_find_elements(),
 
     "uniffi_xcelerate_checksum_method_page_go_back": bindings.ffiFunctions.uniffi_xcelerate_checksum_method_page_go_back(),
 
@@ -1285,6 +1333,32 @@ export function validateChecksums(bindings = getFfiBindings()) {
     const actual = actualChecksums["uniffi_xcelerate_checksum_method_element_click_stealth"];
     if (actual !== expected) {
       throw new ChecksumMismatchError("uniffi_xcelerate_checksum_method_element_click_stealth", expected, actual, {
+        details: {
+          libraryPath: bindings.libraryPath,
+          packageRelativePath: bindings.packageRelativePath,
+        },
+      });
+    }
+  }
+
+  {
+    const expected = ffiIntegrity.checksums["uniffi_xcelerate_checksum_method_element_dispatch_event"];
+    const actual = actualChecksums["uniffi_xcelerate_checksum_method_element_dispatch_event"];
+    if (actual !== expected) {
+      throw new ChecksumMismatchError("uniffi_xcelerate_checksum_method_element_dispatch_event", expected, actual, {
+        details: {
+          libraryPath: bindings.libraryPath,
+          packageRelativePath: bindings.packageRelativePath,
+        },
+      });
+    }
+  }
+
+  {
+    const expected = ffiIntegrity.checksums["uniffi_xcelerate_checksum_method_element_evaluate"];
+    const actual = actualChecksums["uniffi_xcelerate_checksum_method_element_evaluate"];
+    if (actual !== expected) {
+      throw new ChecksumMismatchError("uniffi_xcelerate_checksum_method_element_evaluate", expected, actual, {
         details: {
           libraryPath: bindings.libraryPath,
           packageRelativePath: bindings.packageRelativePath,
@@ -1424,10 +1498,36 @@ export function validateChecksums(bindings = getFfiBindings()) {
   }
 
   {
+    const expected = ffiIntegrity.checksums["uniffi_xcelerate_checksum_method_page_evaluate"];
+    const actual = actualChecksums["uniffi_xcelerate_checksum_method_page_evaluate"];
+    if (actual !== expected) {
+      throw new ChecksumMismatchError("uniffi_xcelerate_checksum_method_page_evaluate", expected, actual, {
+        details: {
+          libraryPath: bindings.libraryPath,
+          packageRelativePath: bindings.packageRelativePath,
+        },
+      });
+    }
+  }
+
+  {
     const expected = ffiIntegrity.checksums["uniffi_xcelerate_checksum_method_page_find_element"];
     const actual = actualChecksums["uniffi_xcelerate_checksum_method_page_find_element"];
     if (actual !== expected) {
       throw new ChecksumMismatchError("uniffi_xcelerate_checksum_method_page_find_element", expected, actual, {
+        details: {
+          libraryPath: bindings.libraryPath,
+          packageRelativePath: bindings.packageRelativePath,
+        },
+      });
+    }
+  }
+
+  {
+    const expected = ffiIntegrity.checksums["uniffi_xcelerate_checksum_method_page_find_elements"];
+    const actual = actualChecksums["uniffi_xcelerate_checksum_method_page_find_elements"];
+    if (actual !== expected) {
+      throw new ChecksumMismatchError("uniffi_xcelerate_checksum_method_page_find_elements", expected, actual, {
         details: {
           libraryPath: bindings.libraryPath,
           packageRelativePath: bindings.packageRelativePath,
@@ -1778,6 +1878,38 @@ export const ffiFunctions = Object.freeze({
   },
 
 
+  uniffi_xcelerate_fn_method_element_dispatch_event(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_element_dispatch_event(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
+  uniffi_xcelerate_fn_method_element_dispatch_event_generic_abi(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_element_dispatch_event_generic_abi(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
+  uniffi_xcelerate_fn_method_element_evaluate(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_element_evaluate(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
+  uniffi_xcelerate_fn_method_element_evaluate_generic_abi(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_element_evaluate_generic_abi(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
   uniffi_xcelerate_fn_method_element_focus(...args) {
     const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_element_focus(...args);
 
@@ -1970,6 +2102,22 @@ export const ffiFunctions = Object.freeze({
   },
 
 
+  uniffi_xcelerate_fn_method_page_evaluate(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_page_evaluate(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
+  uniffi_xcelerate_fn_method_page_evaluate_generic_abi(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_page_evaluate_generic_abi(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
   uniffi_xcelerate_fn_method_page_find_element(...args) {
     const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_page_find_element(...args);
 
@@ -1980,6 +2128,22 @@ export const ffiFunctions = Object.freeze({
 
   uniffi_xcelerate_fn_method_page_find_element_generic_abi(...args) {
     const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_page_find_element_generic_abi(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
+  uniffi_xcelerate_fn_method_page_find_elements(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_page_find_elements(...args);
+
+    return normalizeHandle(result);
+
+  },
+
+
+  uniffi_xcelerate_fn_method_page_find_elements_generic_abi(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_fn_method_page_find_elements_generic_abi(...args);
 
     return normalizeHandle(result);
 
@@ -3026,6 +3190,22 @@ export const ffiFunctions = Object.freeze({
   },
 
 
+  uniffi_xcelerate_checksum_method_element_dispatch_event(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_checksum_method_element_dispatch_event(...args);
+
+    return result;
+
+  },
+
+
+  uniffi_xcelerate_checksum_method_element_evaluate(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_checksum_method_element_evaluate(...args);
+
+    return result;
+
+  },
+
+
   uniffi_xcelerate_checksum_method_element_focus(...args) {
     const result = getLoadedFfiFunctions().uniffi_xcelerate_checksum_method_element_focus(...args);
 
@@ -3106,8 +3286,24 @@ export const ffiFunctions = Object.freeze({
   },
 
 
+  uniffi_xcelerate_checksum_method_page_evaluate(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_checksum_method_page_evaluate(...args);
+
+    return result;
+
+  },
+
+
   uniffi_xcelerate_checksum_method_page_find_element(...args) {
     const result = getLoadedFfiFunctions().uniffi_xcelerate_checksum_method_page_find_element(...args);
+
+    return result;
+
+  },
+
+
+  uniffi_xcelerate_checksum_method_page_find_elements(...args) {
+    const result = getLoadedFfiFunctions().uniffi_xcelerate_checksum_method_page_find_elements(...args);
 
     return result;
 
@@ -3345,6 +3541,28 @@ export function uniffi_xcelerate_fn_method_element_click_stealth_generic_abi(...
 
 
 
+export function uniffi_xcelerate_fn_method_element_dispatch_event(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_element_dispatch_event(...args);
+}
+
+
+export function uniffi_xcelerate_fn_method_element_dispatch_event_generic_abi(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_element_dispatch_event_generic_abi(...args);
+}
+
+
+
+export function uniffi_xcelerate_fn_method_element_evaluate(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_element_evaluate(...args);
+}
+
+
+export function uniffi_xcelerate_fn_method_element_evaluate_generic_abi(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_element_evaluate_generic_abi(...args);
+}
+
+
+
 export function uniffi_xcelerate_fn_method_element_focus(...args) {
   return ffiFunctions.uniffi_xcelerate_fn_method_element_focus(...args);
 }
@@ -3477,6 +3695,17 @@ export function uniffi_xcelerate_fn_method_page_decode_base64_generic_abi(...arg
 
 
 
+export function uniffi_xcelerate_fn_method_page_evaluate(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_page_evaluate(...args);
+}
+
+
+export function uniffi_xcelerate_fn_method_page_evaluate_generic_abi(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_page_evaluate_generic_abi(...args);
+}
+
+
+
 export function uniffi_xcelerate_fn_method_page_find_element(...args) {
   return ffiFunctions.uniffi_xcelerate_fn_method_page_find_element(...args);
 }
@@ -3484,6 +3713,17 @@ export function uniffi_xcelerate_fn_method_page_find_element(...args) {
 
 export function uniffi_xcelerate_fn_method_page_find_element_generic_abi(...args) {
   return ffiFunctions.uniffi_xcelerate_fn_method_page_find_element_generic_abi(...args);
+}
+
+
+
+export function uniffi_xcelerate_fn_method_page_find_elements(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_page_find_elements(...args);
+}
+
+
+export function uniffi_xcelerate_fn_method_page_find_elements_generic_abi(...args) {
+  return ffiFunctions.uniffi_xcelerate_fn_method_page_find_elements_generic_abi(...args);
 }
 
 
@@ -4208,6 +4448,18 @@ export function uniffi_xcelerate_checksum_method_element_click_stealth(...args) 
 
 
 
+export function uniffi_xcelerate_checksum_method_element_dispatch_event(...args) {
+  return ffiFunctions.uniffi_xcelerate_checksum_method_element_dispatch_event(...args);
+}
+
+
+
+export function uniffi_xcelerate_checksum_method_element_evaluate(...args) {
+  return ffiFunctions.uniffi_xcelerate_checksum_method_element_evaluate(...args);
+}
+
+
+
 export function uniffi_xcelerate_checksum_method_element_focus(...args) {
   return ffiFunctions.uniffi_xcelerate_checksum_method_element_focus(...args);
 }
@@ -4268,8 +4520,20 @@ export function uniffi_xcelerate_checksum_method_page_decode_base64(...args) {
 
 
 
+export function uniffi_xcelerate_checksum_method_page_evaluate(...args) {
+  return ffiFunctions.uniffi_xcelerate_checksum_method_page_evaluate(...args);
+}
+
+
+
 export function uniffi_xcelerate_checksum_method_page_find_element(...args) {
   return ffiFunctions.uniffi_xcelerate_checksum_method_page_find_element(...args);
+}
+
+
+
+export function uniffi_xcelerate_checksum_method_page_find_elements(...args) {
+  return ffiFunctions.uniffi_xcelerate_checksum_method_page_find_elements(...args);
 }
 
 

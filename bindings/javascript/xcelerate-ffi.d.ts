@@ -68,6 +68,10 @@ export declare function uniffi_xcelerate_fn_method_element_click(...args: any[])
 
 export declare function uniffi_xcelerate_fn_method_element_click_stealth(...args: any[]): any;
 
+export declare function uniffi_xcelerate_fn_method_element_dispatch_event(...args: any[]): any;
+
+export declare function uniffi_xcelerate_fn_method_element_evaluate(...args: any[]): any;
+
 export declare function uniffi_xcelerate_fn_method_element_focus(...args: any[]): any;
 
 export declare function uniffi_xcelerate_fn_method_element_hover(...args: any[]): any;
@@ -92,7 +96,11 @@ export declare function uniffi_xcelerate_fn_method_page_content(...args: any[]):
 
 export declare function uniffi_xcelerate_fn_method_page_decode_base64(...args: any[]): any;
 
+export declare function uniffi_xcelerate_fn_method_page_evaluate(...args: any[]): any;
+
 export declare function uniffi_xcelerate_fn_method_page_find_element(...args: any[]): any;
+
+export declare function uniffi_xcelerate_fn_method_page_find_elements(...args: any[]): any;
 
 export declare function uniffi_xcelerate_fn_method_page_go_back(...args: any[]): any;
 
@@ -234,6 +242,10 @@ export declare function uniffi_xcelerate_checksum_method_element_click(...args: 
 
 export declare function uniffi_xcelerate_checksum_method_element_click_stealth(...args: any[]): any;
 
+export declare function uniffi_xcelerate_checksum_method_element_dispatch_event(...args: any[]): any;
+
+export declare function uniffi_xcelerate_checksum_method_element_evaluate(...args: any[]): any;
+
 export declare function uniffi_xcelerate_checksum_method_element_focus(...args: any[]): any;
 
 export declare function uniffi_xcelerate_checksum_method_element_hover(...args: any[]): any;
@@ -254,7 +266,11 @@ export declare function uniffi_xcelerate_checksum_method_page_content(...args: a
 
 export declare function uniffi_xcelerate_checksum_method_page_decode_base64(...args: any[]): any;
 
+export declare function uniffi_xcelerate_checksum_method_page_evaluate(...args: any[]): any;
+
 export declare function uniffi_xcelerate_checksum_method_page_find_element(...args: any[]): any;
+
+export declare function uniffi_xcelerate_checksum_method_page_find_elements(...args: any[]): any;
 
 export declare function uniffi_xcelerate_checksum_method_page_go_back(...args: any[]): any;
 

@@ -473,6 +473,10 @@ def _uniffi_check_api_checksums(lib):
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_xcelerate_checksum_method_element_click_stealth() != 23670:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_xcelerate_checksum_method_element_dispatch_event() != 46108:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_xcelerate_checksum_method_element_evaluate() != 21137:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_xcelerate_checksum_method_element_focus() != 30439:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_xcelerate_checksum_method_element_hover() != 28667:
@@ -493,7 +497,11 @@ def _uniffi_check_api_checksums(lib):
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_xcelerate_checksum_method_page_decode_base64() != 40332:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_xcelerate_checksum_method_page_evaluate() != 28351:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_xcelerate_checksum_method_page_find_element() != 12382:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_xcelerate_checksum_method_page_find_elements() != 33764:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_xcelerate_checksum_method_page_go_back() != 14351:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
@@ -677,6 +685,18 @@ _UniffiLib.uniffi_xcelerate_fn_method_element_click_stealth.argtypes = (
     ctypes.c_void_p,
 )
 _UniffiLib.uniffi_xcelerate_fn_method_element_click_stealth.restype = ctypes.c_uint64
+_UniffiLib.uniffi_xcelerate_fn_method_element_dispatch_event.argtypes = (
+    ctypes.c_void_p,
+    _UniffiRustBuffer,
+    _UniffiRustBuffer,
+)
+_UniffiLib.uniffi_xcelerate_fn_method_element_dispatch_event.restype = ctypes.c_uint64
+_UniffiLib.uniffi_xcelerate_fn_method_element_evaluate.argtypes = (
+    ctypes.c_void_p,
+    _UniffiRustBuffer,
+    _UniffiRustBuffer,
+)
+_UniffiLib.uniffi_xcelerate_fn_method_element_evaluate.restype = ctypes.c_uint64
 _UniffiLib.uniffi_xcelerate_fn_method_element_focus.argtypes = (
     ctypes.c_void_p,
 )
@@ -733,11 +753,22 @@ _UniffiLib.uniffi_xcelerate_fn_method_page_decode_base64.argtypes = (
     ctypes.POINTER(_UniffiRustCallStatus),
 )
 _UniffiLib.uniffi_xcelerate_fn_method_page_decode_base64.restype = _UniffiRustBuffer
+_UniffiLib.uniffi_xcelerate_fn_method_page_evaluate.argtypes = (
+    ctypes.c_void_p,
+    _UniffiRustBuffer,
+    _UniffiRustBuffer,
+)
+_UniffiLib.uniffi_xcelerate_fn_method_page_evaluate.restype = ctypes.c_uint64
 _UniffiLib.uniffi_xcelerate_fn_method_page_find_element.argtypes = (
     ctypes.c_void_p,
     _UniffiRustBuffer,
 )
 _UniffiLib.uniffi_xcelerate_fn_method_page_find_element.restype = ctypes.c_uint64
+_UniffiLib.uniffi_xcelerate_fn_method_page_find_elements.argtypes = (
+    ctypes.c_void_p,
+    _UniffiRustBuffer,
+)
+_UniffiLib.uniffi_xcelerate_fn_method_page_find_elements.restype = ctypes.c_uint64
 _UniffiLib.uniffi_xcelerate_fn_method_page_go_back.argtypes = (
     ctypes.c_void_p,
 )
@@ -1078,6 +1109,12 @@ _UniffiLib.uniffi_xcelerate_checksum_method_element_click.restype = ctypes.c_uin
 _UniffiLib.uniffi_xcelerate_checksum_method_element_click_stealth.argtypes = (
 )
 _UniffiLib.uniffi_xcelerate_checksum_method_element_click_stealth.restype = ctypes.c_uint16
+_UniffiLib.uniffi_xcelerate_checksum_method_element_dispatch_event.argtypes = (
+)
+_UniffiLib.uniffi_xcelerate_checksum_method_element_dispatch_event.restype = ctypes.c_uint16
+_UniffiLib.uniffi_xcelerate_checksum_method_element_evaluate.argtypes = (
+)
+_UniffiLib.uniffi_xcelerate_checksum_method_element_evaluate.restype = ctypes.c_uint16
 _UniffiLib.uniffi_xcelerate_checksum_method_element_focus.argtypes = (
 )
 _UniffiLib.uniffi_xcelerate_checksum_method_element_focus.restype = ctypes.c_uint16
@@ -1108,9 +1145,15 @@ _UniffiLib.uniffi_xcelerate_checksum_method_page_content.restype = ctypes.c_uint
 _UniffiLib.uniffi_xcelerate_checksum_method_page_decode_base64.argtypes = (
 )
 _UniffiLib.uniffi_xcelerate_checksum_method_page_decode_base64.restype = ctypes.c_uint16
+_UniffiLib.uniffi_xcelerate_checksum_method_page_evaluate.argtypes = (
+)
+_UniffiLib.uniffi_xcelerate_checksum_method_page_evaluate.restype = ctypes.c_uint16
 _UniffiLib.uniffi_xcelerate_checksum_method_page_find_element.argtypes = (
 )
 _UniffiLib.uniffi_xcelerate_checksum_method_page_find_element.restype = ctypes.c_uint16
+_UniffiLib.uniffi_xcelerate_checksum_method_page_find_elements.argtypes = (
+)
+_UniffiLib.uniffi_xcelerate_checksum_method_page_find_elements.restype = ctypes.c_uint16
 _UniffiLib.uniffi_xcelerate_checksum_method_page_go_back.argtypes = (
 )
 _UniffiLib.uniffi_xcelerate_checksum_method_page_go_back.restype = ctypes.c_uint16
@@ -1159,6 +1202,19 @@ _uniffi_check_contract_api_version(_UniffiLib)
 
 # Public interface members begin here.
 
+
+class _UniffiConverterUInt64(_UniffiConverterPrimitiveInt):
+    CLASS_NAME = "u64"
+    VALUE_MIN = 0
+    VALUE_MAX = 2**64
+
+    @staticmethod
+    def read(buf):
+        return buf.read_u64()
+
+    @staticmethod
+    def write(value, buf):
+        buf.write_u64(value)
 
 class _UniffiConverterDouble(_UniffiConverterPrimitiveFloat):
     @staticmethod
@@ -1274,14 +1330,20 @@ class BrowserConfig:
     Optional path to the browser executable.
     """
 
-    def __init__(self, *, headless: "bool" = True, stealth: "bool" = True, detached: "bool" = True, executable_path: "typing.Optional[str]" = None):
+    download_path: "typing.Optional[str]"
+    """
+    Optional directory where downloaded files should be saved.
+    """
+
+    def __init__(self, *, headless: "bool" = True, stealth: "bool" = True, detached: "bool" = True, executable_path: "typing.Optional[str]" = None, download_path: "typing.Optional[str]" = None):
         self.headless = headless
         self.stealth = stealth
         self.detached = detached
         self.executable_path = executable_path
+        self.download_path = download_path
 
     def __str__(self):
-        return "BrowserConfig(headless={}, stealth={}, detached={}, executable_path={})".format(self.headless, self.stealth, self.detached, self.executable_path)
+        return "BrowserConfig(headless={}, stealth={}, detached={}, executable_path={}, download_path={})".format(self.headless, self.stealth, self.detached, self.executable_path, self.download_path)
 
     def __eq__(self, other):
         if self.headless != other.headless:
@@ -1291,6 +1353,8 @@ class BrowserConfig:
         if self.detached != other.detached:
             return False
         if self.executable_path != other.executable_path:
+            return False
+        if self.download_path != other.download_path:
             return False
         return True
 
@@ -1302,6 +1366,7 @@ class _UniffiConverterTypeBrowserConfig(_UniffiConverterRustBuffer):
             stealth=_UniffiConverterBool.read(buf),
             detached=_UniffiConverterBool.read(buf),
             executable_path=_UniffiConverterOptionalString.read(buf),
+            download_path=_UniffiConverterOptionalString.read(buf),
         )
 
     @staticmethod
@@ -1310,6 +1375,7 @@ class _UniffiConverterTypeBrowserConfig(_UniffiConverterRustBuffer):
         _UniffiConverterBool.check_lower(value.stealth)
         _UniffiConverterBool.check_lower(value.detached)
         _UniffiConverterOptionalString.check_lower(value.executable_path)
+        _UniffiConverterOptionalString.check_lower(value.download_path)
 
     @staticmethod
     def write(value, buf):
@@ -1317,6 +1383,7 @@ class _UniffiConverterTypeBrowserConfig(_UniffiConverterRustBuffer):
         _UniffiConverterBool.write(value.stealth, buf)
         _UniffiConverterBool.write(value.detached, buf)
         _UniffiConverterOptionalString.write(value.executable_path, buf)
+        _UniffiConverterOptionalString.write(value.download_path, buf)
 
 
 # XcelerateError
@@ -1361,6 +1428,11 @@ class XcelerateError:  # type: ignore
         def __repr__(self):
             return "XcelerateError.InternalError({})".format(repr(str(self)))
     _UniffiTempXcelerateError.InternalError = InternalError # type: ignore
+    class Timeout(_UniffiTempXcelerateError):
+
+        def __repr__(self):
+            return "XcelerateError.Timeout({})".format(repr(str(self)))
+    _UniffiTempXcelerateError.Timeout = Timeout # type: ignore
 
 XcelerateError = _UniffiTempXcelerateError # type: ignore
 del _UniffiTempXcelerateError
@@ -1394,6 +1466,10 @@ class _UniffiConverterTypeXcelerateError(_UniffiConverterRustBuffer):
             return XcelerateError.InternalError(
                 _UniffiConverterString.read(buf),
             )
+        if variant == 7:
+            return XcelerateError.Timeout(
+                _UniffiConverterString.read(buf),
+            )
         raise InternalError("Raw enum value doesn't match any cases")
 
     @staticmethod
@@ -1410,6 +1486,8 @@ class _UniffiConverterTypeXcelerateError(_UniffiConverterRustBuffer):
             return
         if isinstance(value, XcelerateError.InternalError):
             return
+        if isinstance(value, XcelerateError.Timeout):
+            return
 
     @staticmethod
     def write(value, buf):
@@ -1425,6 +1503,35 @@ class _UniffiConverterTypeXcelerateError(_UniffiConverterRustBuffer):
             buf.write_i32(5)
         if isinstance(value, XcelerateError.InternalError):
             buf.write_i32(6)
+        if isinstance(value, XcelerateError.Timeout):
+            buf.write_i32(7)
+
+
+
+class _UniffiConverterOptionalUInt64(_UniffiConverterRustBuffer):
+    @classmethod
+    def check_lower(cls, value):
+        if value is not None:
+            _UniffiConverterUInt64.check_lower(value)
+
+    @classmethod
+    def write(cls, value, buf):
+        if value is None:
+            buf.write_u8(0)
+            return
+
+        buf.write_u8(1)
+        _UniffiConverterUInt64.write(value, buf)
+
+    @classmethod
+    def read(cls, buf):
+        flag = buf.read_u8()
+        if flag == 0:
+            return None
+        elif flag == 1:
+            return _UniffiConverterUInt64.read(buf)
+        else:
+            raise InternalError("Unexpected flag byte for optional type")
 
 
 
@@ -1452,6 +1559,31 @@ class _UniffiConverterOptionalString(_UniffiConverterRustBuffer):
             return _UniffiConverterString.read(buf)
         else:
             raise InternalError("Unexpected flag byte for optional type")
+
+
+
+class _UniffiConverterSequenceTypeElement(_UniffiConverterRustBuffer):
+    @classmethod
+    def check_lower(cls, value):
+        for item in value:
+            _UniffiConverterTypeElement.check_lower(item)
+
+    @classmethod
+    def write(cls, value, buf):
+        items = len(value)
+        buf.write_i32(items)
+        for item in value:
+            _UniffiConverterTypeElement.write(item, buf)
+
+    @classmethod
+    def read(cls, buf):
+        count = buf.read_i32()
+        if count < 0:
+            raise InternalError("Unexpected negative sequence length")
+
+        return [
+            _UniffiConverterTypeElement.read(buf) for i in range(count)
+        ]
 
 # objects.
 class BrowserProtocol(typing.Protocol):
@@ -1639,6 +1771,34 @@ class ElementProtocol(typing.Protocol):
         """
 
         raise NotImplementedError
+    def dispatch_event(self, event_type: "str",key: "typing.Optional[str]"):
+        """
+        Dispatches a DOM event on the element (e.g. "blur", "change", "input", "focus",
+        "keydown", "keyup", "keypress", "click", "mousedown", "mouseup").
+
+        Picks the right event constructor based on `event_type` so that handlers reading
+        event-specific properties actually see them: keyboard events need `KeyboardEvent`
+        (for `key`/`code`/`keyCode`, since a plain `Event` leaves them empty), mouse events
+        need `MouseEvent` (for `button`/`clientX`/`clientY`), everything else falls back to a
+        plain bubbling, cancelable `Event`.
+
+        `key` is only used for keyboard events: it sets `KeyboardEvent.key`/`.code` (e.g.
+        "Enter", "a", "Escape") and derives `.keyCode`/`.which` from it for legacy handlers.
+        Ignored for non-keyboard event types.
+        """
+
+        raise NotImplementedError
+    def evaluate(self, script: "str",timeout_ms: "typing.Optional[int]"):
+        """
+        Executes an arbitrary JavaScript function body in the context of this element
+        (`this` refers to the element) and returns the result serialized as a JSON string.
+
+        This reuses the same `Runtime.callFunctionOn` mechanism as the built-in element
+        methods (click, focus, etc.), so it does not open any new injection path beyond
+        what stealth already accounts for.
+        """
+
+        raise NotImplementedError
     def focus(self, ):
         """
         Focuses the element.
@@ -1761,6 +1921,80 @@ _UniffiConverterTypeXcelerateError,
             _UniffiLib.ffi_xcelerate_rust_future_free_pointer,
             # lift function
             _UniffiConverterTypeElement.lift,
+            
+    # Error FFI converter
+_UniffiConverterTypeXcelerateError,
+
+        )
+
+
+
+    async def dispatch_event(self, event_type: "str",key: "typing.Optional[str]") -> None:
+
+        """
+        Dispatches a DOM event on the element (e.g. "blur", "change", "input", "focus",
+        "keydown", "keyup", "keypress", "click", "mousedown", "mouseup").
+
+        Picks the right event constructor based on `event_type` so that handlers reading
+        event-specific properties actually see them: keyboard events need `KeyboardEvent`
+        (for `key`/`code`/`keyCode`, since a plain `Event` leaves them empty), mouse events
+        need `MouseEvent` (for `button`/`clientX`/`clientY`), everything else falls back to a
+        plain bubbling, cancelable `Event`.
+
+        `key` is only used for keyboard events: it sets `KeyboardEvent.key`/`.code` (e.g.
+        "Enter", "a", "Escape") and derives `.keyCode`/`.which` from it for legacy handlers.
+        Ignored for non-keyboard event types.
+        """
+
+        _UniffiConverterString.check_lower(event_type)
+        
+        _UniffiConverterOptionalString.check_lower(key)
+        
+        return await _uniffi_rust_call_async(
+            _UniffiLib.uniffi_xcelerate_fn_method_element_dispatch_event(
+                self._uniffi_clone_pointer(), 
+        _UniffiConverterString.lower(event_type),
+        _UniffiConverterOptionalString.lower(key)
+            ),
+            _UniffiLib.ffi_xcelerate_rust_future_poll_void,
+            _UniffiLib.ffi_xcelerate_rust_future_complete_void,
+            _UniffiLib.ffi_xcelerate_rust_future_free_void,
+            # lift function
+            lambda val: None,
+            
+            
+    # Error FFI converter
+_UniffiConverterTypeXcelerateError,
+
+        )
+
+
+
+    async def evaluate(self, script: "str",timeout_ms: "typing.Optional[int]") -> "str":
+        """
+        Executes an arbitrary JavaScript function body in the context of this element
+        (`this` refers to the element) and returns the result serialized as a JSON string.
+
+        This reuses the same `Runtime.callFunctionOn` mechanism as the built-in element
+        methods (click, focus, etc.), so it does not open any new injection path beyond
+        what stealth already accounts for.
+        """
+
+        _UniffiConverterString.check_lower(script)
+        
+        _UniffiConverterOptionalUInt64.check_lower(timeout_ms)
+        
+        return await _uniffi_rust_call_async(
+            _UniffiLib.uniffi_xcelerate_fn_method_element_evaluate(
+                self._uniffi_clone_pointer(), 
+        _UniffiConverterString.lower(script),
+        _UniffiConverterOptionalUInt64.lower(timeout_ms)
+            ),
+            _UniffiLib.ffi_xcelerate_rust_future_poll_rust_buffer,
+            _UniffiLib.ffi_xcelerate_rust_future_complete_rust_buffer,
+            _UniffiLib.ffi_xcelerate_rust_future_free_rust_buffer,
+            # lift function
+            _UniffiConverterString.lift,
             
     # Error FFI converter
 _UniffiConverterTypeXcelerateError,
@@ -1950,9 +2184,31 @@ class PageProtocol(typing.Protocol):
         raise NotImplementedError
     def decode_base64(self, data: "str"):
         raise NotImplementedError
+    def evaluate(self, script: "str",timeout_ms: "typing.Optional[int]"):
+        """
+        Executes an arbitrary JavaScript expression/script in the page's context and
+        returns its result serialized as a JSON string.
+
+        Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+        after the stealth payload has already been injected for this page, so it does not
+        bypass or race the anti-detection setup.
+
+        `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+        blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+        `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+        never replies until the loop is unblocked. Defaults to 30s when not provided.
+        """
+
+        raise NotImplementedError
     def find_element(self, selector: "str"):
         """
         Finds an element matching the CSS selector.
+        """
+
+        raise NotImplementedError
+    def find_elements(self, selector: "str"):
+        """
+        Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
         """
 
         raise NotImplementedError
@@ -2124,6 +2380,44 @@ _UniffiConverterTypeXcelerateError,
 
 
 
+    async def evaluate(self, script: "str",timeout_ms: "typing.Optional[int]") -> "str":
+        """
+        Executes an arbitrary JavaScript expression/script in the page's context and
+        returns its result serialized as a JSON string.
+
+        Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+        after the stealth payload has already been injected for this page, so it does not
+        bypass or race the anti-detection setup.
+
+        `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+        blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+        `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+        never replies until the loop is unblocked. Defaults to 30s when not provided.
+        """
+
+        _UniffiConverterString.check_lower(script)
+        
+        _UniffiConverterOptionalUInt64.check_lower(timeout_ms)
+        
+        return await _uniffi_rust_call_async(
+            _UniffiLib.uniffi_xcelerate_fn_method_page_evaluate(
+                self._uniffi_clone_pointer(), 
+        _UniffiConverterString.lower(script),
+        _UniffiConverterOptionalUInt64.lower(timeout_ms)
+            ),
+            _UniffiLib.ffi_xcelerate_rust_future_poll_rust_buffer,
+            _UniffiLib.ffi_xcelerate_rust_future_complete_rust_buffer,
+            _UniffiLib.ffi_xcelerate_rust_future_free_rust_buffer,
+            # lift function
+            _UniffiConverterString.lift,
+            
+    # Error FFI converter
+_UniffiConverterTypeXcelerateError,
+
+        )
+
+
+
     async def find_element(self, selector: "str") -> "Element":
         """
         Finds an element matching the CSS selector.
@@ -2141,6 +2435,31 @@ _UniffiConverterTypeXcelerateError,
             _UniffiLib.ffi_xcelerate_rust_future_free_pointer,
             # lift function
             _UniffiConverterTypeElement.lift,
+            
+    # Error FFI converter
+_UniffiConverterTypeXcelerateError,
+
+        )
+
+
+
+    async def find_elements(self, selector: "str") -> "typing.List[Element]":
+        """
+        Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
+        """
+
+        _UniffiConverterString.check_lower(selector)
+        
+        return await _uniffi_rust_call_async(
+            _UniffiLib.uniffi_xcelerate_fn_method_page_find_elements(
+                self._uniffi_clone_pointer(), 
+        _UniffiConverterString.lower(selector)
+            ),
+            _UniffiLib.ffi_xcelerate_rust_future_poll_rust_buffer,
+            _UniffiLib.ffi_xcelerate_rust_future_complete_rust_buffer,
+            _UniffiLib.ffi_xcelerate_rust_future_free_rust_buffer,
+            # lift function
+            _UniffiConverterSequenceTypeElement.lift,
             
     # Error FFI converter
 _UniffiConverterTypeXcelerateError,

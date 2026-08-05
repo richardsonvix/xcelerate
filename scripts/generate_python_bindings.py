@@ -79,8 +79,8 @@ def main():
             with open(generated_py, "r") as f:
                 content = f.read()
             
-            pattern = r"def __init__\(self, \*, headless: \"bool\", stealth: \"bool\", detached: \"bool\", executable_path: \"typing\.Optional\[str\]\"\):"
-            replacement = r'def __init__(self, *, headless: "bool" = True, stealth: "bool" = True, detached: "bool" = True, executable_path: "typing.Optional[str]" = None):'
+            pattern = r"def __init__\(self, \*, headless: \"bool\", stealth: \"bool\", detached: \"bool\", executable_path: \"typing\.Optional\[str\]\", download_path: \"typing\.Optional\[str\]\"\):"
+            replacement = r'def __init__(self, *, headless: "bool" = True, stealth: "bool" = True, detached: "bool" = True, executable_path: "typing.Optional[str]" = None, download_path: "typing.Optional[str]" = None):'
             content = re.sub(pattern, replacement, content)
             
             with open(os.path.join(package_dir, "xcelerate.py"), "w") as f:

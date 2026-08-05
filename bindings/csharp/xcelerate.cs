@@ -3093,6 +3093,9 @@ public class FfiConverterTypePage: FfiConverter<Page, IntPtr> {
 /// <param name="executable_path">
 /// Optional path to the browser executable.
 /// </param>
+/// <param name="download_path">
+/// Optional directory where downloaded files should be saved.
+/// </param>
 public record BrowserConfig (
     /// <summary>
     /// Whether to run the browser in headless mode.
@@ -3109,7 +3112,11 @@ public record BrowserConfig (
     /// <summary>
     /// Optional path to the browser executable.
     /// </summary>
-    string? @executablePath
+    string? @executablePath, 
+    /// <summary>
+    /// Optional directory where downloaded files should be saved.
+    /// </summary>
+    string? @downloadPath
 ) {
 }
 
@@ -3121,7 +3128,8 @@ public class FfiConverterTypeBrowserConfig: FfiConverterRustBuffer<BrowserConfig
             @headless: FfiConverterBoolean.INSTANCE.Read(stream),
             @stealth: FfiConverterBoolean.INSTANCE.Read(stream),
             @detached: FfiConverterBoolean.INSTANCE.Read(stream),
-            @executablePath: FfiConverterOptionalString.INSTANCE.Read(stream)
+            @executablePath: FfiConverterOptionalString.INSTANCE.Read(stream),
+            @downloadPath: FfiConverterOptionalString.INSTANCE.Read(stream)
         );
     }
 
@@ -3130,7 +3138,8 @@ public class FfiConverterTypeBrowserConfig: FfiConverterRustBuffer<BrowserConfig
             + FfiConverterBoolean.INSTANCE.AllocationSize(value.@headless)
             + FfiConverterBoolean.INSTANCE.AllocationSize(value.@stealth)
             + FfiConverterBoolean.INSTANCE.AllocationSize(value.@detached)
-            + FfiConverterOptionalString.INSTANCE.AllocationSize(value.@executablePath);
+            + FfiConverterOptionalString.INSTANCE.AllocationSize(value.@executablePath)
+            + FfiConverterOptionalString.INSTANCE.AllocationSize(value.@downloadPath);
     }
 
     public override void Write(BrowserConfig value, BigEndianStream stream) {
@@ -3138,6 +3147,7 @@ public class FfiConverterTypeBrowserConfig: FfiConverterRustBuffer<BrowserConfig
             FfiConverterBoolean.INSTANCE.Write(value.@stealth, stream);
             FfiConverterBoolean.INSTANCE.Write(value.@detached, stream);
             FfiConverterOptionalString.INSTANCE.Write(value.@executablePath, stream);
+            FfiConverterOptionalString.INSTANCE.Write(value.@downloadPath, stream);
     }
 }
 

@@ -21,6 +21,8 @@ pub struct BrowserConfig {
     pub detached: bool,
     /// Optional path to the browser executable.
     pub executable_path: Option<String>,
+    /// Optional directory where downloaded files should be saved.
+    pub download_path: Option<String>,
 }
 
 impl Default for BrowserConfig {
@@ -30,6 +32,7 @@ impl Default for BrowserConfig {
             stealth: true,
             detached: true,
             executable_path: None,
+            download_path: None,
         }
     }
 }
@@ -90,10 +93,24 @@ impl Browser {
         let (tx, rx) = mpsc::unbounded_channel();
         let (handler, _event_rx) = crate::connection::CdpHandler::new(ws, rx);
         let client = Arc::new(CdpClient::new(tx, handler.event_tx.clone()));
-        
+
         tokio::spawn(handler.run());
 
-        Ok(Arc::new(Self { 
+        // 4. Configure download behavior, if requested
+        if let Some(download_path) = config.download_path {
+            std::fs::create_dir_all(&download_path).map_err(|_| XcelerateError::InternalError)?;
+            let params = browser_protocol::browser::SetDownloadBehaviorParams::builder("allow")
+                .download_path(download_path)
+                .build();
+            let params_val = serde_json::to_value(&params)?;
+            client.execute_raw(
+                browser_protocol::browser::SetDownloadBehaviorParams::METHOD,
+                None,
+                params_val,
+            ).await?;
+        }
+
+        Ok(Arc::new(Self {
             client, 
             _process: tokio::sync::Mutex::new(child),
             _process_guard: guard,

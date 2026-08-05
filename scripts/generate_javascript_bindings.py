@@ -118,6 +118,7 @@ def main():
       stealth: true,
       detached: true,
       executable_path: null,
+      download_path: null,
       ...config
     };
     config = finalConfig;"""

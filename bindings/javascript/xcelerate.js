@@ -39,6 +39,8 @@ import {
 
   FfiConverterString,
 
+  FfiConverterUInt64,
+
 } from "./runtime/ffi-converters.js";
 
 
@@ -392,10 +394,18 @@ export class XcelerateErrorInternalError extends XcelerateError {
   }
 }
 
+export class XcelerateErrorTimeout extends XcelerateError {
+  constructor(message = undefined) {
+    super("Timeout", message ?? "Timeout");
+    this.name = "XcelerateErrorTimeout";
+    this.message = message ?? "Timeout";
+  }
+}
+
 const FfiConverterBrowserConfig = new (class extends AbstractFfiConverterByteArray {
   allocationSize(value) {
     const recordValue = uniffiRequireRecordObject("BrowserConfig", value);
-    return FfiConverterBool.allocationSize(recordValue["headless"]) + FfiConverterBool.allocationSize(recordValue["stealth"]) + FfiConverterBool.allocationSize(recordValue["detached"]) + uniffiOptionalConverter(FfiConverterString).allocationSize(recordValue["executable_path"]);
+    return FfiConverterBool.allocationSize(recordValue["headless"]) + FfiConverterBool.allocationSize(recordValue["stealth"]) + FfiConverterBool.allocationSize(recordValue["detached"]) + uniffiOptionalConverter(FfiConverterString).allocationSize(recordValue["executable_path"]) + uniffiOptionalConverter(FfiConverterString).allocationSize(recordValue["download_path"]);
   }
 
   write(value, writer) {
@@ -404,6 +414,7 @@ const FfiConverterBrowserConfig = new (class extends AbstractFfiConverterByteArr
     FfiConverterBool.write(recordValue["stealth"], writer);
     FfiConverterBool.write(recordValue["detached"], writer);
     uniffiOptionalConverter(FfiConverterString).write(recordValue["executable_path"], writer);
+    uniffiOptionalConverter(FfiConverterString).write(recordValue["download_path"], writer);
   }
 
   read(reader) {
@@ -412,6 +423,7 @@ const FfiConverterBrowserConfig = new (class extends AbstractFfiConverterByteArr
       "stealth": FfiConverterBool.read(reader),
       "detached": FfiConverterBool.read(reader),
       "executable_path": uniffiOptionalConverter(FfiConverterString).read(reader),
+      "download_path": uniffiOptionalConverter(FfiConverterString).read(reader),
     };
   }
 })();
@@ -435,7 +447,10 @@ const FfiConverterXcelerateError = new (class extends AbstractFfiConverterByteAr
     if (value instanceof XcelerateErrorInternalError) {
       return 4;
     }
-    throw new TypeError("XcelerateError values must be instances of XcelerateErrorWsError, XcelerateErrorSerdeError, XcelerateErrorCdpResponseError, XcelerateErrorHttpError, XcelerateErrorNotFound, XcelerateErrorInternalError.");
+    if (value instanceof XcelerateErrorTimeout) {
+      return 4;
+    }
+    throw new TypeError("XcelerateError values must be instances of XcelerateErrorWsError, XcelerateErrorSerdeError, XcelerateErrorCdpResponseError, XcelerateErrorHttpError, XcelerateErrorNotFound, XcelerateErrorInternalError, XcelerateErrorTimeout.");
   }
 
   write(value, writer) {
@@ -463,7 +478,11 @@ const FfiConverterXcelerateError = new (class extends AbstractFfiConverterByteAr
       writer.writeInt32(6);
       return;
     }
-    throw new TypeError("XcelerateError values must be instances of XcelerateErrorWsError, XcelerateErrorSerdeError, XcelerateErrorCdpResponseError, XcelerateErrorHttpError, XcelerateErrorNotFound, XcelerateErrorInternalError.");
+    if (value instanceof XcelerateErrorTimeout) {
+      writer.writeInt32(7);
+      return;
+    }
+    throw new TypeError("XcelerateError values must be instances of XcelerateErrorWsError, XcelerateErrorSerdeError, XcelerateErrorCdpResponseError, XcelerateErrorHttpError, XcelerateErrorNotFound, XcelerateErrorInternalError, XcelerateErrorTimeout.");
   }
 
   read(reader) {
@@ -481,6 +500,8 @@ const FfiConverterXcelerateError = new (class extends AbstractFfiConverterByteAr
         return new XcelerateErrorNotFound(FfiConverterString.read(reader));
       case 6:
         return new XcelerateErrorInternalError(FfiConverterString.read(reader));
+      case 7:
+        return new XcelerateErrorTimeout(FfiConverterString.read(reader));
       default:
         throw new UnexpectedEnumCase(`Unexpected XcelerateError case ${String(enumTag)}.`);
     }
@@ -529,6 +550,7 @@ export class Browser extends UniffiObjectBase {
       stealth: true,
       detached: true,
       executable_path: null,
+      download_path: null,
       ...config
     };
     config = finalConfig;
@@ -767,6 +789,68 @@ export class Element extends UniffiObjectBase {
       completeFunc,
       freeFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_free_u64(rustFuture),
       liftFunc: (uniffiResult) => uniffiElementObjectFactory.createRawExternal(uniffiResult),
+      ...uniffiRustCallOptions(FfiConverterXcelerateError),
+    });
+  }
+
+  /**
+   * Dispatches a DOM event on the element (e.g. "blur", "change", "input", "focus",
+   * "keydown", "keyup", "keypress", "click", "mousedown", "mouseup").
+   *
+   * Picks the right event constructor based on `event_type` so that handlers reading
+   * event-specific properties actually see them: keyboard events need `KeyboardEvent`
+   * (for `key`/`code`/`keyCode`, since a plain `Event` leaves them empty), mouse events
+   * need `MouseEvent` (for `button`/`clientX`/`clientY`), everything else falls back to a
+   * plain bubbling, cancelable `Event`.
+   *
+   * `key` is only used for keyboard events: it sets `KeyboardEvent.key`/`.code` (e.g.
+   * "Enter", "a", "Escape") and derives `.keyCode`/`.which` from it for legacy handlers.
+   * Ignored for non-keyboard event types.
+   */
+  async dispatch_event(event_type, key) {
+    const loweredSelf = uniffiElementObjectFactory.cloneHandle(this);
+    const ffiMethod =
+      uniffiElementObjectFactory.usesGenericAbi(this)
+        ? ffiFunctions.uniffi_xcelerate_fn_method_element_dispatch_event_generic_abi
+        : ffiFunctions.uniffi_xcelerate_fn_method_element_dispatch_event;
+    const loweredEventType = uniffiLowerString(event_type);
+    const loweredKey = uniffiLowerIntoRustBuffer(uniffiOptionalConverter(FfiConverterString), key);
+    const completeFunc = (rustFuture, status) => ffiFunctions.ffi_xcelerate_rust_future_complete_void(rustFuture, status);
+    return rustCallAsync({
+      rustFutureFunc: () => ffiMethod(loweredSelf, loweredEventType, loweredKey),
+      pollFunc: (rustFuture, _continuationCallback, continuationHandle) => ffiFunctions.ffi_xcelerate_rust_future_poll_void(rustFuture, uniffiGetRustFutureContinuationPointer(), continuationHandle),
+      cancelFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_cancel_void(rustFuture),
+      completeFunc,
+      freeFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_free_void(rustFuture),
+      liftFunc: (_uniffiResult) => undefined,
+      ...uniffiRustCallOptions(FfiConverterXcelerateError),
+    });
+  }
+
+  /**
+   * Executes an arbitrary JavaScript function body in the context of this element
+   * (`this` refers to the element) and returns the result serialized as a JSON string.
+   *
+   * This reuses the same `Runtime.callFunctionOn` mechanism as the built-in element
+   * methods (click, focus, etc.), so it does not open any new injection path beyond
+   * what stealth already accounts for.
+   */
+  async evaluate(script, timeout_ms) {
+    const loweredSelf = uniffiElementObjectFactory.cloneHandle(this);
+    const ffiMethod =
+      uniffiElementObjectFactory.usesGenericAbi(this)
+        ? ffiFunctions.uniffi_xcelerate_fn_method_element_evaluate_generic_abi
+        : ffiFunctions.uniffi_xcelerate_fn_method_element_evaluate;
+    const loweredScript = uniffiLowerString(script);
+    const loweredTimeoutMs = uniffiLowerIntoRustBuffer(uniffiOptionalConverter(FfiConverterUInt64), timeout_ms);
+    const completeFunc = (rustFuture, status) => ffiFunctions.ffi_xcelerate_rust_future_complete_rust_buffer(rustFuture, status);
+    return rustCallAsync({
+      rustFutureFunc: () => ffiMethod(loweredSelf, loweredScript, loweredTimeoutMs),
+      pollFunc: (rustFuture, _continuationCallback, continuationHandle) => ffiFunctions.ffi_xcelerate_rust_future_poll_rust_buffer(rustFuture, uniffiGetRustFutureContinuationPointer(), continuationHandle),
+      cancelFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_cancel_rust_buffer(rustFuture),
+      completeFunc,
+      freeFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_free_rust_buffer(rustFuture),
+      liftFunc: (uniffiResult) => uniffiLiftStringFromRustBuffer(uniffiResult),
       ...uniffiRustCallOptions(FfiConverterXcelerateError),
     });
   }
@@ -1082,6 +1166,39 @@ export class Page extends UniffiObjectBase {
   }
 
   /**
+   * Executes an arbitrary JavaScript expression/script in the page's context and
+   * returns its result serialized as a JSON string.
+   *
+   * Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+   * after the stealth payload has already been injected for this page, so it does not
+   * bypass or race the anti-detection setup.
+   *
+   * `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+   * blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+   * `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+   * never replies until the loop is unblocked. Defaults to 30s when not provided.
+   */
+  async evaluate(script, timeout_ms) {
+    const loweredSelf = uniffiPageObjectFactory.cloneHandle(this);
+    const ffiMethod =
+      uniffiPageObjectFactory.usesGenericAbi(this)
+        ? ffiFunctions.uniffi_xcelerate_fn_method_page_evaluate_generic_abi
+        : ffiFunctions.uniffi_xcelerate_fn_method_page_evaluate;
+    const loweredScript = uniffiLowerString(script);
+    const loweredTimeoutMs = uniffiLowerIntoRustBuffer(uniffiOptionalConverter(FfiConverterUInt64), timeout_ms);
+    const completeFunc = (rustFuture, status) => ffiFunctions.ffi_xcelerate_rust_future_complete_rust_buffer(rustFuture, status);
+    return rustCallAsync({
+      rustFutureFunc: () => ffiMethod(loweredSelf, loweredScript, loweredTimeoutMs),
+      pollFunc: (rustFuture, _continuationCallback, continuationHandle) => ffiFunctions.ffi_xcelerate_rust_future_poll_rust_buffer(rustFuture, uniffiGetRustFutureContinuationPointer(), continuationHandle),
+      cancelFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_cancel_rust_buffer(rustFuture),
+      completeFunc,
+      freeFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_free_rust_buffer(rustFuture),
+      liftFunc: (uniffiResult) => uniffiLiftStringFromRustBuffer(uniffiResult),
+      ...uniffiRustCallOptions(FfiConverterXcelerateError),
+    });
+  }
+
+  /**
    * Finds an element matching the CSS selector.
    */
   async findElement(selector) {
@@ -1107,6 +1224,28 @@ export class Page extends UniffiObjectBase {
       completeFunc,
       freeFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_free_u64(rustFuture),
       liftFunc: (uniffiResult) => uniffiElementObjectFactory.createRawExternal(uniffiResult),
+      ...uniffiRustCallOptions(FfiConverterXcelerateError),
+    });
+  }
+
+  /**
+   * Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
+   */
+  async find_elements(selector) {
+    const loweredSelf = uniffiPageObjectFactory.cloneHandle(this);
+    const ffiMethod =
+      uniffiPageObjectFactory.usesGenericAbi(this)
+        ? ffiFunctions.uniffi_xcelerate_fn_method_page_find_elements_generic_abi
+        : ffiFunctions.uniffi_xcelerate_fn_method_page_find_elements;
+    const loweredSelector = uniffiLowerString(selector);
+    const completeFunc = (rustFuture, status) => ffiFunctions.ffi_xcelerate_rust_future_complete_rust_buffer(rustFuture, status);
+    return rustCallAsync({
+      rustFutureFunc: () => ffiMethod(loweredSelf, loweredSelector),
+      pollFunc: (rustFuture, _continuationCallback, continuationHandle) => ffiFunctions.ffi_xcelerate_rust_future_poll_rust_buffer(rustFuture, uniffiGetRustFutureContinuationPointer(), continuationHandle),
+      cancelFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_cancel_rust_buffer(rustFuture),
+      completeFunc,
+      freeFunc: (rustFuture) => ffiFunctions.ffi_xcelerate_rust_future_free_rust_buffer(rustFuture),
+      liftFunc: (uniffiResult) => uniffiLiftFromRustBuffer(uniffiArrayConverter(FfiConverterElement), uniffiResult),
       ...uniffiRustCallOptions(FfiConverterXcelerateError),
     });
   }

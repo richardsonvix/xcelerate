@@ -36,6 +36,10 @@ export interface BrowserConfig {
    * Optional path to the browser executable.
    */
   "executable_path": string | undefined;
+  /**
+   * Optional directory where downloaded files should be saved.
+   */
+  "download_path": string | undefined;
 }
 
 export declare class XcelerateError extends globalThis.Error {
@@ -73,6 +77,11 @@ export declare class XcelerateErrorInternalError extends XcelerateError {
   constructor(message?: string);
 }
 
+export declare class XcelerateErrorTimeout extends XcelerateError {
+  readonly tag: "Timeout";
+  constructor(message?: string);
+}
+
 /**
  * Represents a browser instance (e.g., Chrome or Edge).
  */
@@ -107,6 +116,30 @@ export declare class Element extends UniffiObjectBase {
    * Clicks the element using realistic mouse movement and CDP input events.
    */
   click_stealth(): Promise<Element>;
+  /**
+   * Dispatches a DOM event on the element (e.g. "blur", "change", "input", "focus",
+   * "keydown", "keyup", "keypress", "click", "mousedown", "mouseup").
+   *
+   * Picks the right event constructor based on `event_type` so that handlers reading
+   * event-specific properties actually see them: keyboard events need `KeyboardEvent`
+   * (for `key`/`code`/`keyCode`, since a plain `Event` leaves them empty), mouse events
+   * need `MouseEvent` (for `button`/`clientX`/`clientY`), everything else falls back to a
+   * plain bubbling, cancelable `Event`.
+   *
+   * `key` is only used for keyboard events: it sets `KeyboardEvent.key`/`.code` (e.g.
+   * "Enter", "a", "Escape") and derives `.keyCode`/`.which` from it for legacy handlers.
+   * Ignored for non-keyboard event types.
+   */
+  dispatch_event(event_type: string, key: string | undefined): Promise<void>;
+  /**
+   * Executes an arbitrary JavaScript function body in the context of this element
+   * (`this` refers to the element) and returns the result serialized as a JSON string.
+   *
+   * This reuses the same `Runtime.callFunctionOn` mechanism as the built-in element
+   * methods (click, focus, etc.), so it does not open any new injection path beyond
+   * what stealth already accounts for.
+   */
+  evaluate(script: string, timeout_ms: bigint | number | undefined): Promise<string>;
   /**
    * Focuses the element.
    */
@@ -146,9 +179,27 @@ export declare class Page extends UniffiObjectBase {
   content(): Promise<string>;
   decode_base64(data: string): Uint8Array;
   /**
+   * Executes an arbitrary JavaScript expression/script in the page's context and
+   * returns its result serialized as a JSON string.
+   *
+   * Runs in the same `Runtime.evaluate` context used internally (title/content/etc.),
+   * after the stealth payload has already been injected for this page, so it does not
+   * bypass or race the anti-detection setup.
+   *
+   * `timeout_ms` bounds how long we wait for the CDP response. Without it a script that
+   * blocks the page's JS event loop (e.g. `alert()`, or a promise that never settles since
+   * `awaitPromise` is always on) hangs this call forever, since `Runtime.evaluate` simply
+   * never replies until the loop is unblocked. Defaults to 30s when not provided.
+   */
+  evaluate(script: string, timeout_ms: bigint | number | undefined): Promise<string>;
+  /**
    * Finds an element matching the CSS selector.
    */
   find_element(selector: string): Promise<Element>;
+  /**
+   * Finds all elements matching the CSS selector (equivalent to `document.querySelectorAll`).
+   */
+  find_elements(selector: string): Promise<Array<Element>>;
   go_back(): Promise<void>;
   /**
    * Triggers a mousePress event at the current mouse coordinates.

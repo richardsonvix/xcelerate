@@ -40,6 +40,7 @@ impl_cdp_command!(js_protocol::runtime::GetPropertiesParams<'static>, js_protoco
 impl_cdp_command!(js_protocol::runtime::ReleaseObjectParams<'static>, serde_json::Value, "Runtime.releaseObject");
 impl_cdp_command!(browser_protocol::browser::GetVersionParams, browser_protocol::browser::GetVersionReturns<'static>, "Browser.getVersion");
 impl_cdp_command!(browser_protocol::browser::CloseParams, serde_json::Value, "Browser.close");
+impl_cdp_command!(browser_protocol::browser::SetDownloadBehaviorParams<'static>, serde_json::Value, "Browser.setDownloadBehavior");
 impl_cdp_command!(browser_protocol::page::ReloadParams<'static>, serde_json::Value, "Page.reload");
 impl_cdp_command!(browser_protocol::page::CaptureScreenshotParams<'static>, browser_protocol::page::CaptureScreenshotReturns<'static>, "Page.captureScreenshot");
 impl_cdp_command!(browser_protocol::page::PrintToPDFParams<'static>, browser_protocol::page::PrintToPDFReturns<'static>, "Page.printToPDF");
